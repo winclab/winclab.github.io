@@ -96,10 +96,10 @@ export const program = {
   ],
 };
 
-// Funding acknowledgements, shown on the Research page.
+// Funding acknowledgements, shown at the bottom of the Research page (logos live in public/images/sponsors/).
 export const acknowledgements = [
-  'Natural Sciences and Engineering Research Council of Canada (NSERC)',
-  'Research New Brunswick',
-  'Cisco Research Fund',
-  'University Internal Research Fund: Harrison McCain Foundation Young Scholars Award',
+  { name: 'Natural Sciences and Engineering Research Council of Canada (NSERC)', logo: '/images/sponsors/nserc.jpg' },
+  { name: 'Research New Brunswick', logo: '/images/sponsors/research-nb.jpg' },
+  { name: 'Cisco Research Fund', logo: '/images/sponsors/cisco.svg' },
+  { name: 'UNB Internal Research Fund: Harrison McCain Foundation Young Scholars Award', logo: '/images/sponsors/unb.png' },
 ];

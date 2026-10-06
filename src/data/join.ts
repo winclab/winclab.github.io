@@ -5,7 +5,7 @@ export const openings = [
   {
     title: 'Two open PhD positions',
     start: 'Starting Winter (January) 2027',
-    details: 'Full financial support for admitted PhD students.',
+    details: 'Full financial support for exceptional candidates.',
   },
 ];
 
@@ -24,11 +24,12 @@ export const requirements = [
   'Strong academic record, with a minimum GPA of 3.3.',
   'Highly self-motivated.',
   'PhD applicants must hold a Master’s degree with a strong research record; prior relevant publications are preferred.',
+  'Postdoctoral applicants should hold a PhD with a strong publication record in a related area.',
   'Meet UNB’s English language requirements.',
 ];
 
 export const benefits = [
-  'Full financial support (PhD)',
+  'Full financial support for exceptional candidates',
   'Timely, effective supervision',
   'Strong research outcomes through joint effort',
   'Teaching assistant and guest-lecturing opportunities',
@@ -39,8 +40,8 @@ export const benefits = [
 // Ways to work with the lab, shown as cards.
 export const paths = [
   {
-    title: 'PhD students',
-    text: 'PhD applicants should hold a Master’s degree with a strong research record. Admitted PhD students receive full financial support.',
+    title: 'PhD students and postdocs',
+    text: 'PhD applicants should hold a Master’s degree with a strong research record. Postdoctoral applicants should hold a PhD with relevant publications in our research areas.',
   },
   {
     title: 'Master’s students',
@@ -95,6 +96,10 @@ export const faqs = [
   {
     q: 'How can I improve my chances?',
     a: 'Be genuine. Read some of our <a href="/research#publications">recent publications</a> before reaching out, and mention specifically which work or direction interests you and why. Generic mass emails are unlikely to get a response.',
+  },
+  {
+    q: 'Is funding available?',
+    a: 'Yes. Full financial support is available for exceptional candidates at all levels. See “Funding and scholarships” above for teaching assistantships and UNB scholarships.',
   },
   {
     q: 'Do you accept visiting students or scholars?',

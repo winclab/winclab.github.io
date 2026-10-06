@@ -4,7 +4,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import PublicationItem from '../components/PublicationItem.astro';
 import { program, acknowledgements } from '../data/research';
-import { sponsors } from '../data/sponsors';
 import { getPI } from '../lib/pi';
 
 const pi = (await getPI()).data;
@@ -138,25 +137,24 @@ const filters = [
   </section>
 
   <!-- Acknowledgements -->
-  <section aria-labelledby="ack-heading" class="border-t border-unb-line bg-unb-light/60">
-    <div class="container-page"><div class="mx-auto grid max-w-4xl items-center gap-6 py-10 md:grid-cols-[1fr_auto]">
-      <div>
-        <h2 id="ack-heading" class="text-lg font-semibold">Acknowledgements</h2>
-        <p class="mt-1 text-sm text-unb-grey">This research is supported in part by:</p>
-        <ul class="mt-2 list-disc space-y-0.5 pl-5 text-sm text-unb-grey">
-          {acknowledgements.map((a) => <li>{a}</li>)}
+  <section aria-labelledby="ack-heading" class="bg-unb-light py-12 sm:py-16">
+    <div class="container-page">
+      <div class="mx-auto max-w-4xl">
+        <h2 id="ack-heading" class="section-title mb-2">Acknowledgements</h2>
+        <p class="mb-8 text-unb-grey">This research is supported in part by:</p>
+        <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {
+            acknowledgements.map((a) => (
+              <li class="flex flex-col items-center rounded-lg bg-white p-5 text-center shadow-sm">
+                <div class="flex h-16 items-center">
+                  <img src={a.logo} alt="" class="max-h-14 w-auto max-w-[140px] object-contain" loading="lazy" />
+                </div>
+                <p class="mt-4 text-sm leading-snug text-unb-grey">{a.name}</p>
+              </li>
+            ))
+          }
         </ul>
       </div>
-      <ul class="flex flex-wrap items-center gap-6">
-        {
-          sponsors.map((s) => (
-            <li>
-              <img src={s.logo} alt={s.name} title={s.name} class="h-10 w-auto" loading="lazy" />
-            </li>
-          ))
-        }
-      </ul>
-    </div>
     </div>
   </section>
 </BaseLayout>
