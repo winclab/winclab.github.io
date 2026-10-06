@@ -1,0 +1,127 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { pi } from '../data/site';
+
+const paths = [
+  {
+    title: 'PhD and MSc students',
+    text: '[PLACEHOLDER] We recruit motivated graduate students with backgrounds in electrical/computer engineering, computer science, or related fields. Funding is available for strong candidates.',
+  },
+  {
+    title: 'Postdoctoral fellows',
+    text: '[PLACEHOLDER] Postdoctoral positions are posted here when available. We also support applications to external fellowships (e.g. NSERC, Mitacs).',
+  },
+  {
+    title: 'Undergraduate researchers',
+    text: '[PLACEHOLDER] UNB undergraduates can join through summer research awards (e.g. NSERC USRA), honours theses, or capstone projects.',
+  },
+  {
+    title: 'Visiting scholars and collaborators',
+    text: '[PLACEHOLDER] We welcome visiting students, researchers, and industry partners. Get in touch to discuss collaboration.',
+  },
+];
+
+const subject = encodeURIComponent('[Prospective Student] Your Name, Program, Intended Start Term');
+---
+
+<BaseLayout title="Join Us" description="Open positions and how to apply to the WINC Lab.">
+  <PageHeader
+    eyebrow="Join Us"
+    title="Work with us"
+    intro="We are always looking for curious, driven people who want to build the future of wireless and intelligent systems."
+  />
+
+  <section class="container-page py-12">
+    <div class="mb-10 rounded-lg border-l-4 border-unb-red bg-unb-light p-6">
+      <p class="font-semibold">[PLACEHOLDER] Current openings</p>
+      <p class="mt-1 text-unb-grey">
+        [PLACEHOLDER] e.g. "We have 2 funded PhD positions starting September 2027." Update or remove this box.
+      </p>
+    </div>
+
+    <h2 class="section-title">Ways to work with the lab</h2>
+    <div class="grid gap-5 sm:grid-cols-2">
+      {
+        paths.map((p) => (
+          <article class="card">
+            <h3 class="text-lg font-semibold text-unb-dark">{p.title}</h3>
+            <p class="mt-2 text-unb-grey">{p.text}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="bg-unb-light py-12">
+    <div class="container-page max-w-3xl">
+      <h2 class="section-title">How to apply</h2>
+      <p class="text-lg">
+        Email {pi.name} at
+        <a href={`mailto:${pi.email}?subject=${subject}`} class="font-semibold text-unb-dark">{pi.email}</a>
+        with the subject line:
+      </p>
+      <p class="mt-3 rounded border border-unb-line bg-white px-4 py-3 font-mono text-sm break-words">
+        [Prospective Student] Your Name, Program, Intended Start Term
+      </p>
+      <p class="mt-4 text-unb-grey">
+        Because of the volume of email, we may not be able to reply to every message. Applications that follow the
+        instructions below are much more likely to get a response.
+      </p>
+
+      <div class="mt-8 space-y-3">
+        <details class="group card p-0" open>
+          <summary class="flex cursor-pointer list-none items-center justify-between p-5 font-semibold">
+            What to include in your email
+            <span class="text-unb-red transition group-open:rotate-45" aria-hidden="true">+</span>
+          </summary>
+          <div class="prose-lab border-t border-unb-line p-5">
+            <ul>
+              <li>[PLACEHOLDER] Your CV (PDF), including publications if any.</li>
+              <li>[PLACEHOLDER] Unofficial transcripts for all degrees.</li>
+              <li>[PLACEHOLDER] A short paragraph on which of our research directions interests you and why.</li>
+              <li>[PLACEHOLDER] English test scores (if applicable).</li>
+              <li>[PLACEHOLDER] Names of 2–3 references.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="group card p-0">
+          <summary class="flex cursor-pointer list-none items-center justify-between p-5 font-semibold">
+            Formal application to UNB
+            <span class="text-unb-red transition group-open:rotate-45" aria-hidden="true">+</span>
+          </summary>
+          <div class="prose-lab border-t border-unb-line p-5">
+            <p>
+              [PLACEHOLDER] After an initial conversation, you will need to apply formally through the
+              <a href="https://www.unb.ca/gradstudies/" target="_blank" rel="noopener">UNB School of Graduate Studies</a>
+              and list {pi.name} as your intended supervisor.
+            </p>
+            <p>[PLACEHOLDER] Add deadlines and program-specific requirements here.</p>
+          </div>
+        </details>
+
+        <details class="group card p-0">
+          <summary class="flex cursor-pointer list-none items-center justify-between p-5 font-semibold">
+            Funding and scholarships
+            <span class="text-unb-red transition group-open:rotate-45" aria-hidden="true">+</span>
+          </summary>
+          <div class="prose-lab border-t border-unb-line p-5">
+            <p>[PLACEHOLDER] Describe typical funding packages, teaching assistantships, and external scholarships (NSERC, NBIF, Mitacs).</p>
+          </div>
+        </details>
+
+        <details class="group card p-0">
+          <summary class="flex cursor-pointer list-none items-center justify-between p-5 font-semibold">
+            Frequently asked questions
+            <span class="text-unb-red transition group-open:rotate-45" aria-hidden="true">+</span>
+          </summary>
+          <div class="prose-lab border-t border-unb-line p-5">
+            <p><strong>[PLACEHOLDER] Do I need a publication to apply?</strong> Answer here.</p>
+            <p><strong>[PLACEHOLDER] Can I do a remote internship?</strong> Answer here.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

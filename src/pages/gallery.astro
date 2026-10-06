@@ -1,0 +1,45 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import PlaceholderBadge from '../components/PlaceholderBadge.astro';
+
+// Newest first; photos without a date go last, in file order.
+const photos = (await getCollection('gallery')).sort(
+  (a, b) => (b.data.date?.valueOf() ?? 0) - (a.data.date?.valueOf() ?? 0),
+);
+---
+
+<BaseLayout title="Gallery" description="Photos from the WINC Lab.">
+  <PageHeader eyebrow="Gallery" title="Life in the lab" intro="Group photos, conferences, events, and experiments." />
+
+  <section class="container-page py-12">
+    <ul class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        photos.map((p) => (
+          <li>
+            <figure class="group overflow-hidden rounded-lg border border-unb-line bg-white shadow-sm">
+              <a href={p.data.image} target="_blank" rel="noopener" class="block overflow-hidden">
+                <img
+                  src={p.data.image}
+                  alt={p.data.caption}
+                  loading="lazy"
+                  class="aspect-[4/3] w-full bg-unb-light object-cover transition duration-300 group-hover:scale-105"
+                />
+              </a>
+              <figcaption class="p-3 text-sm">
+                {p.data.caption}
+                {p.data.placeholder && <PlaceholderBadge />}
+                {p.data.date && (
+                  <span class="block text-xs text-unb-grey">
+                    {p.data.date.toLocaleDateString('en-CA', { year: 'numeric', month: 'long', timeZone: 'UTC' })}
+                  </span>
+                )}
+              </figcaption>
+            </figure>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>

@@ -1,0 +1,72 @@
+@import 'tailwindcss';
+
+/*
+  UNB-inspired palette. Change colours here and the whole site updates.
+  Values approximate the UNB brand (red, black, greys); check them against the
+  official UNB brand guide if exact matches are required.
+*/
+@theme {
+  --color-unb-red: #c8102e; /* primary brand red */
+  --color-unb-dark: #7a0019; /* dark red accent: buttons, hover states, headings */
+  --color-unb-darker: #5c0013;
+  --color-unb-black: #1f1f1f;
+  --color-unb-grey: #5b5b5b;
+  --color-unb-light: #f5f3f0; /* warm off-white section background */
+  --color-unb-line: #e4e0db;
+
+  --font-sans: 'Source Sans 3', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Source Serif 4', ui-serif, Georgia, 'Times New Roman', serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-white font-sans text-unb-black antialiased;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-serif text-unb-black;
+  }
+  a {
+    @apply underline-offset-2;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-unb-red;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-5 py-2.5 text-sm font-semibold no-underline transition-colors;
+  }
+  .btn-primary {
+    @apply bg-unb-dark text-white hover:bg-unb-darker;
+  }
+  .btn-outline {
+    @apply border border-unb-dark text-unb-dark hover:bg-unb-dark hover:text-white;
+  }
+  .section-title {
+    @apply mb-6 text-2xl font-semibold sm:text-3xl;
+  }
+  .eyebrow {
+    @apply mb-2 text-xs font-bold tracking-widest text-unb-red uppercase;
+  }
+  .card {
+    @apply rounded-lg border border-unb-line bg-white p-6 shadow-sm;
+  }
+  .prose-lab p {
+    @apply mb-4 leading-relaxed;
+  }
+  .prose-lab a {
+    @apply text-unb-dark underline;
+  }
+  .prose-lab ul {
+    @apply mb-4 list-disc pl-6;
+  }
+}

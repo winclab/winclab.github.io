@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { site, pi } from '../data/site';
+import { summary, directions, interests } from '../data/research';
+---
+
+<BaseLayout title="About" description={summary}>
+  <PageHeader eyebrow="About" title={site.name} intro={summary} />
+
+  <section class="container-page py-12">
+    <div class="prose-lab max-w-3xl text-lg">
+      <p>
+        The {site.shortName} is part of the {site.department} at the {site.university}, led by {pi.name}, {pi.chair}.
+      </p>
+      <p>
+        [PLACEHOLDER] Add a paragraph about the lab's history, facilities, collaborators, and what makes the group distinctive.
+      </p>
+    </div>
+  </section>
+
+  <section class="bg-unb-light py-12">
+    <div class="container-page">
+      <h2 class="section-title">Research directions</h2>
+      <div class="grid gap-5 md:grid-cols-3">
+        {
+          directions.map((d, i) => (
+            <article class="card border-t-4 border-t-unb-red">
+              <p class="font-serif text-3xl font-bold text-unb-red/40">0{i + 1}</p>
+              <h3 class="mt-2 text-xl font-semibold">{d.title}</h3>
+              <p class="mt-2 text-unb-grey">{d.text}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="container-page py-12">
+    <h2 class="section-title">Areas of interest</h2>
+    <ul class="flex flex-wrap gap-2">
+      {
+        interests.map((t) => (
+          <li class="rounded-full border border-unb-dark/30 bg-white px-4 py-1.5 text-sm font-semibold text-unb-dark">{t}</li>
+        ))
+      }
+    </ul>
+    <div class="mt-10 flex flex-wrap gap-3">
+      <a href="/research" class="btn btn-primary">Current research</a>
+      <a href="/people" class="btn btn-outline">Meet the team</a>
+    </div>
+  </section>
+</BaseLayout>

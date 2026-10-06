@@ -1,0 +1,32 @@
+# Gallery photos. Each item needs a unique id, an image path (under public/), and a caption.
+# Photos are shown newest first by date. See README.md → Gallery.
+- id: placeholder-1
+  image: /images/gallery/placeholder-1.svg
+  caption: "[PLACEHOLDER] Photo caption 1"
+  date: 2026-01-01
+  placeholder: true
+- id: placeholder-2
+  image: /images/gallery/placeholder-2.svg
+  caption: "[PLACEHOLDER] Photo caption 2"
+  date: 2026-02-01
+  placeholder: true
+- id: placeholder-3
+  image: /images/gallery/placeholder-3.svg
+  caption: "[PLACEHOLDER] Photo caption 3"
+  date: 2026-03-01
+  placeholder: true
+- id: placeholder-4
+  image: /images/gallery/placeholder-4.svg
+  caption: "[PLACEHOLDER] Photo caption 4"
+  date: 2026-04-01
+  placeholder: true
+- id: placeholder-5
+  image: /images/gallery/placeholder-5.svg
+  caption: "[PLACEHOLDER] Photo caption 5"
+  date: 2026-05-01
+  placeholder: true
+- id: placeholder-6
+  image: /images/gallery/placeholder-6.svg
+  caption: "[PLACEHOLDER] Photo caption 6"
+  date: 2026-06-01
+  placeholder: true

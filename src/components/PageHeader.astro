@@ -1,0 +1,17 @@
+---
+// Title banner at the top of each inner page.
+interface Props {
+  title: string;
+  eyebrow?: string;
+  intro?: string;
+}
+const { title, eyebrow, intro } = Astro.props;
+---
+
+<section class="border-b border-unb-line bg-unb-light">
+  <div class="container-page py-10 sm:py-14">
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    <h1 class="text-3xl font-bold sm:text-4xl">{title}</h1>
+    {intro && <p class="mt-4 max-w-3xl text-lg text-unb-grey">{intro}</p>}
+  </div>
+</section>

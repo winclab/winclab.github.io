@@ -1,0 +1,48 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import PersonCard from '../components/PersonCard.astro';
+
+// Display order and headings for each `role` value in src/content/people/*.md
+const groups = [
+  { role: 'pi', heading: 'Principal Investigator' },
+  { role: 'postdoc', heading: 'Postdoctoral Fellows' },
+  { role: 'phd', heading: 'PhD Students' },
+  { role: 'masters', heading: "Master's Students" },
+  { role: 'undergrad', heading: 'Undergraduate Researchers' },
+  { role: 'visiting', heading: 'Visiting Researchers' },
+  { role: 'alumni', heading: 'Alumni' },
+] as const;
+
+const people = (await getCollection('people')).sort(
+  (a, b) => a.data.order - b.data.order || a.data.name.localeCompare(b.data.name),
+);
+---
+
+<BaseLayout title="People" description="Members of the WINC Lab at the University of New Brunswick.">
+  <PageHeader eyebrow="People" title="Our team" intro="The researchers and students who make up the WINC Lab." />
+
+  <div class="container-page py-12">
+    {
+      groups.map(({ role, heading }) => {
+        const members = people.filter((p) => p.data.role === role);
+        return (
+          members.length > 0 && (
+            <section class="mb-14">
+              <h2 class="section-title border-b border-unb-line pb-2">{heading}</h2>
+              <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {members.map((p) => (
+                  <PersonCard person={p} />
+                ))}
+              </div>
+            </section>
+          )
+        );
+      })
+    }
+    <p class="rounded-lg bg-unb-light p-6 text-center">
+      Interested in joining us? <a href="/join" class="font-semibold text-unb-dark">See open positions →</a>
+    </p>
+  </div>
+</BaseLayout>

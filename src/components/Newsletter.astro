@@ -1,0 +1,52 @@
+---
+import { newsletter } from '../data/site';
+---
+
+{
+  newsletter.enabled && (
+    <section id="newsletter" class="bg-unb-dark text-white">
+      <div class="container-page grid items-center gap-8 py-12 md:grid-cols-2">
+        <div>
+          <h2 class="text-2xl font-semibold text-white sm:text-3xl">{newsletter.heading}</h2>
+          <p class="mt-2 text-white/85">{newsletter.blurb}</p>
+        </div>
+
+        {/*
+          ===================== [PLACEHOLDER] NEWSLETTER EMBED =====================
+          Replace the <form> below with the embed code from your provider.
+
+          Buttondown: Settings → Embedding → copy the HTML form. It looks like
+            <form action="https://buttondown.com/api/emails/embed-subscribe/YOUR_USERNAME"
+                  method="post" target="popupwindow" ...>
+
+          Mailchimp: Audience → Signup forms → Embedded forms → copy the code.
+            Keep only the <form>...</form> part; Mailchimp's CSS is optional.
+
+          Keep the same classes on the input and button to keep the site's styling.
+          ==========================================================================
+        */}
+        <form
+          class="flex flex-col gap-3 sm:flex-row"
+          action="#"
+          method="post"
+          onsubmit="event.preventDefault(); alert('Newsletter signup is not connected yet (placeholder).');"
+        >
+          <label for="newsletter-email" class="sr-only">
+            Email address
+          </label>
+          <input
+            id="newsletter-email"
+            type="email"
+            name="email"
+            required
+            placeholder="you@example.com"
+            class="w-full flex-1 rounded-md border-0 bg-white px-4 py-2.5 text-unb-black placeholder:text-gray-400 focus:ring-2 focus:ring-white"
+          />
+          <button type="submit" class="btn bg-white text-unb-dark hover:bg-unb-light">
+            Subscribe
+          </button>
+        </form>
+      </div>
+    </section>
+  )
+}

@@ -1,0 +1,36 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { render } from 'astro:content';
+import PlaceholderBadge from './PlaceholderBadge.astro';
+
+interface Props {
+  person: CollectionEntry<'people'>;
+}
+const { person } = Astro.props;
+const { name, title, photo, email, website, linkedin, research, now, placeholder } = person.data;
+const { Content } = await render(person);
+---
+
+<article class="card flex h-full flex-col items-center text-center">
+  <img
+    src={photo}
+    alt={`Photo of ${name}`}
+    width="160"
+    height="160"
+    loading="lazy"
+    class="h-32 w-32 rounded-full border-4 border-unb-light bg-unb-light object-cover"
+  />
+  <h3 class="mt-4 text-lg font-semibold">
+    {name}
+    {placeholder && <PlaceholderBadge />}
+  </h3>
+  {title && <p class="text-sm font-semibold text-unb-red">{title}</p>}
+  {research && <p class="mt-2 text-sm text-unb-grey">{research}</p>}
+  {now && <p class="mt-2 text-sm text-unb-grey">Now: {now}</p>}
+  <div class="prose-lab mt-2 text-sm text-unb-grey"><Content /></div>
+  <div class="mt-auto flex flex-wrap justify-center gap-3 pt-3 text-sm">
+    {email && <a href={`mailto:${email}`} class="text-unb-dark hover:underline">Email</a>}
+    {website && <a href={website} class="text-unb-dark hover:underline" target="_blank" rel="noopener">Website</a>}
+    {linkedin && <a href={linkedin} class="text-unb-dark hover:underline" target="_blank" rel="noopener">LinkedIn</a>}
+  </div>
+</article>

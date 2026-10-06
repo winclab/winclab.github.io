@@ -1,0 +1,65 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import PublicationItem from '../components/PublicationItem.astro';
+import { program } from '../data/research';
+import { pi } from '../data/site';
+
+const pubs = (await getCollection('publications')).sort(
+  (a, b) => b.data.year - a.data.year || a.data.title.localeCompare(b.data.title),
+);
+const years = [...new Set(pubs.map((p) => p.data.year))];
+---
+
+<BaseLayout title="Research" description="Current research program and publications of the WINC Lab.">
+  <PageHeader eyebrow="Research" title="Current research program" />
+
+  <section class="container-page py-12">
+    <h2 class="text-2xl font-semibold sm:text-3xl">{program.title}</h2>
+    <p class="mt-1 text-sm font-semibold text-unb-red">{program.funding}</p>
+
+    <div class="mt-6 rounded-lg border-l-4 border-unb-dark bg-unb-light p-6">
+      <p class="eyebrow">Goal</p>
+      <p class="text-lg">{program.goal}</p>
+    </div>
+
+    <h3 class="mt-10 mb-4 text-xl font-semibold">Subtasks</h3>
+    <ol class="grid gap-5 md:grid-cols-2">
+      {
+        program.subtasks.map((t) => (
+          <li class="card">
+            <h4 class="font-serif text-lg font-semibold text-unb-dark">{t.title}</h4>
+            <p class="mt-2 text-unb-grey">{t.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section id="publications" class="border-t border-unb-line bg-unb-light/50 py-12">
+    <div class="container-page">
+      <div class="mb-6 flex flex-wrap items-baseline justify-between gap-2">
+        <h2 class="text-2xl font-semibold sm:text-3xl">Publications</h2>
+        <a href={pi.links.scholar} class="text-sm font-semibold text-unb-dark hover:underline" target="_blank" rel="noopener">
+          Full list on Google Scholar →
+        </a>
+      </div>
+      {pubs.length === 0 && <p class="text-unb-grey">No publications yet.</p>}
+      {
+        years.map((year) => (
+          <div class="mb-8">
+            <h3 class="mb-3 border-b border-unb-line pb-1 font-serif text-xl font-semibold text-unb-red">{year}</h3>
+            <ul class="space-y-4">
+              {pubs
+                .filter((p) => p.data.year === year)
+                .map((p) => (
+                  <PublicationItem pub={p} />
+                ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>
