@@ -1,8 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
+import DirectionFigure from '../components/DirectionFigure.astro';
 import { site, pi } from '../data/site';
-import { summary, directions, interests } from '../data/research';
+import { summary, mission, directions, interests } from '../data/research';
 ---
 
 <BaseLayout title="About" description={summary}>
@@ -10,11 +11,9 @@ import { summary, directions, interests } from '../data/research';
 
   <section class="container-page py-12">
     <div class="prose-lab max-w-3xl text-lg">
+      <p>{mission}</p>
       <p>
-        The {site.shortName} is part of the {site.department} at the {site.university}, led by {pi.name}, {pi.chair}.
-      </p>
-      <p>
-        [PLACEHOLDER] Add a paragraph about the lab's history, facilities, collaborators, and what makes the group distinctive.
+        The {site.shortName} is part of the {site.department} at the {site.university}, led by {pi.name}, {pi.title} and {pi.chair}.
       </p>
     </div>
   </section>
@@ -22,13 +21,24 @@ import { summary, directions, interests } from '../data/research';
   <section class="bg-unb-light py-12">
     <div class="container-page">
       <h2 class="section-title">Research directions</h2>
-      <div class="grid gap-5 md:grid-cols-3">
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {
-          directions.map((d, i) => (
-            <article class="card border-t-4 border-t-unb-red">
-              <p class="font-serif text-3xl font-bold text-unb-red/40">0{i + 1}</p>
-              <h3 class="mt-2 text-xl font-semibold">{d.title}</h3>
-              <p class="mt-2 text-unb-grey">{d.text}</p>
+          directions.map((d) => (
+            <article class="card flex flex-col p-0">
+              <div class="p-3 pb-0">
+                <DirectionFigure figure={d.figure} title={d.title} />
+              </div>
+              <div class="p-5">
+                <h3 class="text-xl font-semibold">{d.title}</h3>
+                <ul class="mt-3 space-y-2 text-unb-grey">
+                  {d.points.map((p) => (
+                    <li class="flex gap-2">
+                      <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-unb-red" aria-hidden="true" />
+                      <span>{p}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </article>
           ))
         }
@@ -46,7 +56,7 @@ import { summary, directions, interests } from '../data/research';
       }
     </ul>
     <div class="mt-10 flex flex-wrap gap-3">
-      <a href="/research" class="btn btn-primary">Current research</a>
+      <a href="/research" class="btn btn-primary">Current research program</a>
       <a href="/people" class="btn btn-outline">Meet the team</a>
     </div>
   </section>

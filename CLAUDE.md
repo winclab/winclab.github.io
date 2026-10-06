@@ -16,7 +16,7 @@ from the `winclab/winclab.github.io` repo (served at the domain root, no `base` 
 ```
 astro.config.mjs            site URL (SITE_URL), the only place the domain is set
 .github/workflows/deploy.yml  withastro/action → actions/deploy-pages on push to main
-public/                     served as-is: favicon, images/{pi,people,gallery,sponsors}
+public/                     served as-is: favicon, images/{pi,people,gallery,sponsors,research,brand}
 src/
   content.config.ts         zod schemas for the 4 content collections
   content/
@@ -26,11 +26,13 @@ src/
     gallery/gallery.yaml    list of photos (file() loader; each item needs unique `id`)
   data/
     site.ts                 lab name, address, PI info + profile links, nav, newsletter toggle
-    research.ts             summary, research directions, interests, research program (goal + subtasks)
+    research.ts             summary, mission, research directions, interests, research program
+                            (goal, figure, challenge/direction pairs), acknowledgements
     sponsors.ts             "Supported by" logos
   styles/global.css         Tailwind import, @theme colour tokens (unb-red, unb-dark, …), .btn/.card/etc.
   layouts/BaseLayout.astro  <head>, header, footer
-  components/               Header (mobile menu script), Footer, PageHeader, HeroGraphic (inline SVG),
+  components/               Header (mobile menu script), Footer, PageHeader, DirectionFigure (inline SVG
+                            illustration per research direction),
                             Newsletter (placeholder form), PersonCard, PublicationItem, PlaceholderBadge
   pages/                    index, about, research, pi, people, gallery, join, 404
 ```
@@ -50,6 +52,12 @@ src/
   `role` values are in the schema in `src/content.config.ts`.
 - No UI framework; the only client JS is the mobile menu toggle in `Header.astro`.
 - Keep pages accessible: alt text on images, `aria-current` on nav, visible focus styles.
+
+- **Research program disclosure:** only the headline challenge/direction pairs from the lab poster are
+  published. Do not add the detailed numbered sub-points (PI's request).
+- **Do not use the semantic-communications transmitter/receiver diagram from the poster** (it is used on
+  another lab's site). The research program architecture figure in `public/images/research/` is fine to use.
+- Text marked `[DRAFT]` (LEO satellite, agentic AI directions) was written for the site and needs PI review.
 
 ## Adding content (quick reference)
 

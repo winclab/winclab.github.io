@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import PublicationItem from '../components/PublicationItem.astro';
-import { program } from '../data/research';
+import { program, acknowledgements } from '../data/research';
 import { pi } from '../data/site';
 
 const pubs = (await getCollection('publications')).sort(
@@ -12,29 +12,52 @@ const pubs = (await getCollection('publications')).sort(
 const years = [...new Set(pubs.map((p) => p.data.year))];
 ---
 
-<BaseLayout title="Research" description="Current research program and publications of the WINC Lab.">
-  <PageHeader eyebrow="Research" title="Current research program" />
+<BaseLayout title="Research" description={`Current research program: ${program.title}.`}>
+  <PageHeader eyebrow="Current research program" title={program.title} />
 
   <section class="container-page py-12">
-    <h2 class="text-2xl font-semibold sm:text-3xl">{program.title}</h2>
-    <p class="mt-1 text-sm font-semibold text-unb-red">{program.funding}</p>
+    <div class="grid items-start gap-8 lg:grid-cols-[3fr_2fr]">
+      <figure class="card p-3">
+        <a href={program.figure.src} target="_blank" rel="noopener">
+          <img src={program.figure.src} alt={program.figure.alt} width="951" height="684" class="h-auto w-full rounded" />
+        </a>
+        <figcaption class="px-2 pt-3 text-sm text-unb-grey">{program.figure.caption}</figcaption>
+      </figure>
 
-    <div class="mt-6 rounded-lg border-l-4 border-unb-dark bg-unb-light p-6">
-      <p class="eyebrow">Goal</p>
-      <p class="text-lg">{program.goal}</p>
+      <div>
+        <div class="rounded-lg border-l-4 border-unb-dark bg-unb-light p-6">
+          <p class="eyebrow">Goal</p>
+          <p class="text-lg">{program.goal}</p>
+        </div>
+        <p class="mt-6 mb-2 text-sm font-semibold tracking-wider text-unb-grey uppercase">Application scenarios</p>
+        <ul class="flex flex-wrap gap-2">
+          {program.applications.map((a) => <li class="rounded-full bg-unb-dark px-3 py-1 text-sm font-semibold text-white">{a}</li>)}
+        </ul>
+      </div>
     </div>
 
-    <h3 class="mt-10 mb-4 text-xl font-semibold">Subtasks</h3>
-    <ol class="grid gap-5 md:grid-cols-2">
+    <h2 class="mt-12 mb-5 text-2xl font-semibold sm:text-3xl">Key challenges and research directions</h2>
+    <ol class="grid gap-5 md:grid-cols-3">
       {
-        program.subtasks.map((t) => (
-          <li class="card">
-            <h4 class="font-serif text-lg font-semibold text-unb-dark">{t.title}</h4>
-            <p class="mt-2 text-unb-grey">{t.text}</p>
+        program.subtasks.map((t, i) => (
+          <li class="card flex flex-col border-t-4 border-t-unb-red">
+            <p class="font-serif text-3xl font-bold text-unb-red/40">0{i + 1}</p>
+            <p class="mt-2 text-xs font-bold tracking-wider text-unb-grey uppercase">Challenge</p>
+            <p class="mt-1">{t.challenge}</p>
+            <p class="mt-4 text-xs font-bold tracking-wider text-unb-red uppercase">Research direction</p>
+            <p class="mt-1 font-serif text-lg font-semibold text-unb-dark">{t.direction}</p>
           </li>
         ))
       }
     </ol>
+
+    <div class="mt-12 rounded-lg border border-unb-line p-6">
+      <h2 class="text-lg font-semibold">Acknowledgements</h2>
+      <p class="mt-1 text-unb-grey">This research is supported in part by:</p>
+      <ul class="mt-2 list-disc space-y-1 pl-6 text-unb-grey">
+        {acknowledgements.map((a) => <li>{a}</li>)}
+      </ul>
+    </div>
   </section>
 
   <section id="publications" class="border-t border-unb-line bg-unb-light/50 py-12">

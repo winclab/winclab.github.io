@@ -5,7 +5,7 @@ export const site = {
   shortName: 'WINC Lab',
   name: 'Wireless Intelligent Networking and Computing Lab',
   description:
-    'The WINC Lab at the University of New Brunswick researches wireless networking, the Internet of Things, and intelligent edge computing.',
+    'The WINC Lab at the University of New Brunswick develops architectures, algorithms, and system designs for intelligent wireless communication, networking, and computing.',
   department: 'Department of Electrical and Computer Engineering',
   university: 'University of New Brunswick',
   universityUrl: 'https://www.unb.ca',

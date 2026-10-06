@@ -1,0 +1,170 @@
+---
+// Simple illustrations for each research direction on the About page.
+// To use an image instead, put it in public/images/research/ and replace the SVG for that key with
+// <img src="/images/research/your-figure.png" alt="..." />.
+interface Props {
+  figure: 'semcom' | 'edge' | 'twin' | 'leo' | 'agentic';
+  title: string;
+}
+const { figure, title } = Astro.props;
+const D = '#7a0019'; // dark red
+const R = '#c8102e'; // red
+const G = '#8a8580'; // grey
+const L = '#e4e0db'; // line
+---
+
+<svg viewBox="0 0 320 180" class="h-auto w-full" role="img" aria-label={`Illustration: ${title}`}>
+  <rect width="320" height="180" rx="10" fill="#f5f3f0"></rect>
+
+  {
+    figure === 'semcom' && (
+      <g>
+        {/* sender: many raw bits */}
+        <rect x="18" y="45" width="78" height="90" rx="10" fill="#fff" stroke={L} stroke-width="2" />
+        {Array.from({ length: 24 }, (_, i) => (
+          <circle cx={30 + (i % 6) * 11} cy={60 + Math.floor(i / 6) * 20} r="3.5" fill={G} opacity="0.55" />
+        ))}
+        {/* extraction funnel */}
+        <path d="M104 55 L150 80 L150 100 L104 125 Z" fill={R} opacity="0.15" stroke={R} stroke-width="2" />
+        {/* meaning tokens over the channel */}
+        <path d="M150 90 C170 70 190 110 210 90" fill="none" stroke={D} stroke-width="2" stroke-dasharray="4 4" />
+        <circle cx="166" cy="82" r="6" fill={D} />
+        <circle cx="194" cy="98" r="6" fill={R} />
+        {/* receiver: understood task */}
+        <rect x="222" y="45" width="80" height="90" rx="10" fill="#fff" stroke={D} stroke-width="2" />
+        <circle cx="262" cy="80" r="16" fill="none" stroke={D} stroke-width="3" />
+        <path d="M254 80 l6 6 l11 -12" fill="none" stroke={R} stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+        <rect x="240" y="108" width="44" height="6" rx="3" fill={L} />
+        <rect x="248" y="119" width="28" height="6" rx="3" fill={L} />
+        <text x="57" y="160" text-anchor="middle" font-size="11" fill={G} font-family="sans-serif">raw data</text>
+        <text x="180" y="160" text-anchor="middle" font-size="11" fill={G} font-family="sans-serif">meaning</text>
+        <text x="262" y="160" text-anchor="middle" font-size="11" fill={G} font-family="sans-serif">task</text>
+      </g>
+    )
+  }
+
+  {
+    figure === 'edge' && (
+      <g>
+        {/* cloud */}
+        <path d="M130 42 a16 16 0 0 1 28 -12 a20 20 0 0 1 36 6 a14 14 0 0 1 2 28 h-62 a14 14 0 0 1 -4 -22 Z" fill="#fff" stroke={G} stroke-width="2" />
+        {/* edge nodes */}
+        {[70, 160, 250].map((x) => (
+          <g>
+            <line x1={x} y1="96" x2="160" y2="66" stroke={G} stroke-width="1.5" stroke-dasharray="4 4" />
+            <rect x={x - 22} y="88" width="44" height="30" rx="6" fill={D} />
+            <rect x={x - 12} y="96" width="24" height="14" rx="2" fill="none" stroke="#fff" stroke-width="2" />
+            {[-6, 0, 6].map((d) => (
+              <line x1={x + d} y1="93" x2={x + d} y2="96" stroke="#fff" stroke-width="1.5" />
+            ))}
+            {/* devices */}
+            {[-28, 0, 28].map((d) => (
+              <g>
+                <line x1={x} y1="118" x2={x + d} y2="140" stroke={R} stroke-width="1.5" />
+                <circle cx={x + d} cy="146" r="7" fill="#fff" stroke={R} stroke-width="2" />
+              </g>
+            ))}
+          </g>
+        ))}
+      </g>
+    )
+  }
+
+  {
+    figure === 'twin' && (
+      <g>
+        {/* physical network */}
+        {(() => {
+          const pts = [[40, 60], [100, 40], [120, 110], [60, 135], [80, 88]];
+          const links = [[0, 1], [1, 2], [2, 3], [3, 0], [4, 0], [4, 1], [4, 2], [4, 3]];
+          return (
+            <g>
+              {links.map(([a, b]) => (
+                <line x1={pts[a][0]} y1={pts[a][1]} x2={pts[b][0]} y2={pts[b][1]} stroke={D} stroke-width="2" />
+              ))}
+              {pts.map(([x, y]) => (
+                <circle cx={x} cy={y} r="8" fill={D} />
+              ))}
+              {/* digital twin (mirrored, dashed) */}
+              {links.map(([a, b]) => (
+                <line x1={320 - pts[a][0]} y1={pts[a][1]} x2={320 - pts[b][0]} y2={pts[b][1]} stroke={R} stroke-width="2" stroke-dasharray="5 4" />
+              ))}
+              {pts.map(([x, y]) => (
+                <circle cx={320 - x} cy={y} r="8" fill="#fff" stroke={R} stroke-width="2.5" stroke-dasharray="3 2" />
+              ))}
+            </g>
+          );
+        })()}
+        {/* sync arrows */}
+        <path d="M140 76 H180" stroke={G} stroke-width="2.5" marker-end="url(#twin-arrow)" />
+        <path d="M180 100 H140" stroke={G} stroke-width="2.5" marker-end="url(#twin-arrow)" />
+        <defs>
+          <marker id="twin-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M0 0 L10 5 L0 10 Z" fill={G} />
+          </marker>
+        </defs>
+        <text x="80" y="165" text-anchor="middle" font-size="11" fill={G} font-family="sans-serif">physical</text>
+        <text x="240" y="165" text-anchor="middle" font-size="11" fill={G} font-family="sans-serif">digital twin</text>
+      </g>
+    )
+  }
+
+  {
+    figure === 'leo' && (
+      <g>
+        {/* earth */}
+        <ellipse cx="160" cy="250" rx="220" ry="105" fill="#fff" stroke={G} stroke-width="2" />
+        {/* orbit */}
+        <ellipse cx="160" cy="250" rx="260" ry="170" fill="none" stroke={L} stroke-width="2" stroke-dasharray="6 5" />
+        {/* satellites and beams */}
+        {[[70, 98], [160, 82], [250, 98]].map(([x, y], i) => (
+          <g>
+            <path d={`M${x} ${y + 10} L${x - 24} ${y + 66} L${x + 24} ${y + 66} Z`} fill={R} opacity="0.12" />
+            <rect x={x - 26} y={y - 5} width="16" height="10" fill={i === 1 ? R : D} opacity="0.85" />
+            <rect x={x + 10} y={y - 5} width="16" height="10" fill={i === 1 ? R : D} opacity="0.85" />
+            <rect x={x - 8} y={y - 8} width="16" height="16" rx="3" fill="#fff" stroke={D} stroke-width="2.5" />
+          </g>
+        ))}
+        {/* inter-satellite links */}
+        <line x1="88" y1="94" x2="142" y2="84" stroke={D} stroke-width="1.5" stroke-dasharray="4 3" />
+        <line x1="178" y1="84" x2="232" y2="94" stroke={D} stroke-width="1.5" stroke-dasharray="4 3" />
+        {/* ground terminals */}
+        {[70, 160, 250].map((x) => (
+          <circle cx={x} cy="160" r="5" fill={D} />
+        ))}
+      </g>
+    )
+  }
+
+  {
+    figure === 'agentic' && (
+      <g>
+        {/* reasoning loop around the agent */}
+        <circle cx="160" cy="90" r="52" fill="none" stroke={L} stroke-width="10" />
+        <path d="M160 38 A52 52 0 0 1 205 116" fill="none" stroke={R} stroke-width="4" marker-end="url(#ag-arrow)" />
+        <path d="M200 120 A52 52 0 0 1 115 116" fill="none" stroke={D} stroke-width="4" marker-end="url(#ag-arrow)" />
+        <path d="M110 112 A52 52 0 0 1 155 38" fill="none" stroke={G} stroke-width="4" marker-end="url(#ag-arrow)" />
+        <defs>
+          <marker id="ag-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+            <path d="M0 0 L10 5 L0 10 Z" fill={D} />
+          </marker>
+        </defs>
+        {/* agent core */}
+        <polygon points="160,68 179,79 179,101 160,112 141,101 141,79" fill={D} />
+        <circle cx="153" cy="88" r="3" fill="#fff" />
+        <circle cx="167" cy="88" r="3" fill="#fff" />
+        <path d="M153 97 q7 5 14 0" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" />
+        <text x="232" y="62" font-size="11" fill={G} font-family="sans-serif">perceive</text>
+        <text x="160" y="166" text-anchor="middle" font-size="11" fill={G} font-family="sans-serif">act</text>
+        <text x="40" y="62" font-size="11" fill={G} font-family="sans-serif">reason</text>
+        {/* network nodes the agent manages */}
+        {[[40, 130], [280, 130], [30, 90], [290, 90]].map(([x, y]) => (
+          <g>
+            <line x1={x} y1={y} x2={x < 160 ? 108 : 212} y2="90" stroke={L} stroke-width="1.5" />
+            <circle cx={x} cy={y} r="6" fill="#fff" stroke={D} stroke-width="2" />
+          </g>
+        ))}
+      </g>
+    )
+  }
+</svg>

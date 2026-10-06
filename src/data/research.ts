@@ -1,62 +1,105 @@
 // Research content used on the Home, About, and Research pages.
-// Everything marked [PLACEHOLDER] should be replaced with real text.
+// Source: WINC Lab poster (2026). Text marked [DRAFT] was written for the website and needs PI review.
 
 export const summary =
-  'The WINC Lab designs wireless networks and computing systems that are intelligent, efficient, and trustworthy. ' +
-  'We combine wireless communications, machine learning, and edge computing to build the next generation of Internet of Things (IoT) systems. ' +
-  '[PLACEHOLDER: refine this summary.]';
+  'Our WINC Lab focuses on developing new architectures, algorithms, and system designs for intelligent ' +
+  'wireless communication, networking, and computing.';
 
-// Shown on the About page.
+export const mission =
+  'Our research aims to facilitate the transition from traditional communications to intelligent communications ' +
+  'and advanced computing to support diverse intelligent Internet of Things (IoT) applications.';
+
+// Research directions, shown on the About page. `figure` selects the illustration in
+// src/components/DirectionFigure.astro (semcom | edge | twin | leo | agentic).
 export const directions = [
   {
-    title: 'Intelligent Wireless Networking',
-    text: '[PLACEHOLDER] Machine-learning-driven resource allocation, scheduling, and spectrum management for 5G/6G and beyond.',
+    title: 'Semantic Communications',
+    figure: 'semcom',
+    points: [
+      '"Understand-before-transmit": only task-related, meaningful information is exchanged.',
+      'Alleviates spectrum scarcity and reduces network traffic loads.',
+    ],
   },
   {
-    title: 'Internet of Things',
-    text: '[PLACEHOLDER] Scalable, low-power, and secure connectivity for massive IoT deployments in industry, agriculture, and smart cities.',
+    title: 'Edge Intelligence',
+    figure: 'edge',
+    points: [
+      'Deploying AI directly at network edge devices, such as edge servers, access points, and IoT devices.',
+      'Lower latency and communication overhead, better privacy and scalability, real-time decision making, and higher energy efficiency.',
+    ],
   },
   {
-    title: 'Edge Computing and Edge AI',
-    text: '[PLACEHOLDER] Distributed and federated learning, task offloading, and inference at the network edge.',
+    title: 'Digital Twin-assisted Networking',
+    figure: 'twin',
+    points: [
+      'Virtual, real-time replicas of physical communication systems.',
+      'Enable intelligent monitoring, prediction, optimization, and autonomous network management.',
+    ],
   },
-];
+  {
+    title: 'LEO Satellite Networks',
+    figure: 'leo',
+    points: [
+      '[DRAFT] Low Earth orbit constellations that extend connectivity to remote and underserved regions.',
+      '[DRAFT] Integrated satellite-terrestrial networking, resource management, and edge computing in space.',
+    ],
+  },
+  {
+    title: 'Agentic AI for Wireless Networks',
+    figure: 'agentic',
+    points: [
+      '[DRAFT] Autonomous AI agents that perceive network conditions, reason, and act to manage wireless networks.',
+      '[DRAFT] Toward self-configuring, self-optimizing, and intent-driven networks.',
+    ],
+  },
+] as const;
 
 // Shown as tags on the About page.
 export const interests = [
-  '[PLACEHOLDER] 6G networks',
-  'Wireless communications',
-  'Internet of Things',
-  'Edge computing',
-  'Federated learning',
-  'Network optimization',
-  'Cyber-physical systems',
-  'Network security',
+  'B5G/6G networks',
+  'Intelligent IoT systems',
+  'Semantic communications',
+  'Edge intelligence',
+  'Digital twin-assisted networking',
+  'LEO satellite networks',
+  'Agentic AI',
+  'Joint resource allocation',
+  'Machine learning for communications and networking',
 ];
 
 // The current research program, shown at the top of the Research page.
+// Only the headline challenge/direction pairs are published here, not the detailed task breakdown.
 export const program = {
-  title: '[PLACEHOLDER] Research Program Title',
-  funding: '[PLACEHOLDER] Funded by e.g. Cisco Systems / NSERC',
+  title: 'Edge AI-empowered Semantic Communication Networks for Intelligent IoT Systems',
   goal:
-    '[PLACEHOLDER] The long-term goal of this program is to develop the theory, algorithms, and prototypes needed for intelligent, ' +
-    'self-optimizing wireless IoT networks that operate reliably at scale.',
+    'Leverage distributed AI deployed at the network edge to achieve effective semantic communication networks ' +
+    'for energy-efficient, low-latency, intelligent IoT systems.',
+  figure: {
+    src: '/images/research/edge-ai-semantic-networks.png',
+    alt: 'Three-layer architecture: a central cloud layer with server and knowledge base; a distributed edge server layer of access points, edge servers, and knowledge bases; and an IoT device layer covering smart home, autonomous driving, and smart factory, connected by semantic communications.',
+    caption: 'Edge AI-enabled semantic communication network architecture for intelligent IoT systems.',
+  },
+  applications: ['Smart home', 'Autonomous driving', 'Smart factory'],
   subtasks: [
     {
-      title: 'Subtask 1: [PLACEHOLDER] Learning-based resource management',
-      text: '[PLACEHOLDER] Describe the objective, approach, and expected outcomes of this subtask.',
+      challenge: 'Dynamic user demands and background knowledge changes',
+      direction: 'Adaptive knowledge sharing-enabled hybrid semantic-bit communications',
     },
     {
-      title: 'Subtask 2: [PLACEHOLDER] Edge intelligence for IoT',
-      text: '[PLACEHOLDER] Describe the objective, approach, and expected outcomes of this subtask.',
+      challenge: 'Heavy communication overheads over harsh channel conditions',
+      direction: 'Data-efficient generative AI-assisted semantic communications',
     },
     {
-      title: 'Subtask 3: [PLACEHOLDER] Secure and trustworthy connectivity',
-      text: '[PLACEHOLDER] Describe the objective, approach, and expected outcomes of this subtask.',
-    },
-    {
-      title: 'Subtask 4: [PLACEHOLDER] Testbed and experimental validation',
-      text: '[PLACEHOLDER] Describe the objective, approach, and expected outcomes of this subtask.',
+      challenge: 'Complex wireless environments and limited network resources',
+      direction: 'Digital twin-assisted semantic network management and resource orchestration',
     },
   ],
 };
+
+// Funding acknowledgements, shown on the Research page.
+export const acknowledgements = [
+  'Natural Sciences and Engineering Research Council of Canada (NSERC)',
+  'Research New Brunswick',
+  'Cisco Research Fund',
+  'University Internal Research Fund: Harrison McCain Foundation Young Scholars Award',
+];
