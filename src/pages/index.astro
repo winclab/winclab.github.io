@@ -2,18 +2,19 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroGraphic from '../components/HeroGraphic.astro';
-import Newsletter from '../components/Newsletter.astro';
 import NewsList from '../components/NewsList.astro';
-import { pi, site } from '../data/site';
+import { site } from '../data/site';
+import { getPI } from '../lib/pi';
 import { summary, mission } from '../data/research';
 import { sponsors } from '../data/sponsors';
 
+const pi = (await getPI()).data;
 const news = (await getCollection('news')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()).slice(0, 3);
 
 const cards = [
   { title: 'About', href: '/about', text: 'Who we are, our research directions, and areas of interest.' },
   { title: 'Research', href: '/research', text: 'Edge AI-empowered semantic communication networks for intelligent IoT, and our publications.' },
-  { title: 'PI', href: '/pi', text: `Meet ${pi.name}, ${pi.chair}.` },
+  { title: 'PI', href: '/pi', text: `Meet ${pi.name}, ${pi.subtitle}.` },
   { title: 'People', href: '/people', text: 'The students, researchers, and alumni of the lab.' },
   { title: 'Gallery', href: '/gallery', text: 'Photos from the lab, conferences, and events.' },
   { title: 'Join Us', href: '/join', text: 'Open positions and how to apply.' },
@@ -29,7 +30,7 @@ const cards = [
         <p class="eyebrow">{site.university} · {site.department}</p>
         <h1 class="text-4xl leading-tight font-bold sm:text-5xl">{site.name}</h1>
         <p class="mt-5 text-lg text-unb-grey">{summary} {mission}</p>
-        <p class="mt-3 text-sm text-unb-grey">Led by {pi.name}, {pi.title} and {pi.chair}.</p>
+        <p class="mt-3 text-sm text-unb-grey">Led by {pi.name}, {pi.title} and {pi.subtitle}.</p>
         <div class="mt-8 flex flex-wrap gap-3">
           <a href="/research" class="btn btn-primary">See our research</a>
           <a href="/join" class="btn btn-outline">Join us</a>
@@ -72,8 +73,6 @@ const cards = [
       </section>
     )
   }
-
-  <Newsletter />
 
   <!-- Sponsors -->
   <section class="container-page py-14">

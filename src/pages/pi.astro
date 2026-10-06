@@ -1,66 +1,69 @@
 ---
+// Everything on this page comes from the `role: pi` person in src/content/people/ (hong-chen.md):
+// frontmatter for name/photo/links, and the Markdown body for the biography.
+import { render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
-import { pi } from '../data/site';
+import { getPI } from '../lib/pi';
+import { site } from '../data/site';
 
-// Buttons appear only for links that are filled in src/data/site.ts.
+const entry = await getPI();
+const pi = entry.data;
+const { Content } = await render(entry);
+
+// A button appears for each link that is filled in.
 const buttons = [
-  { label: 'Google Scholar', href: pi.links.scholar },
-  { label: 'UNB Profile', href: pi.links.unb },
-  { label: 'Email', href: `mailto:${pi.email}` },
-  { label: 'LinkedIn', href: pi.links.linkedin },
-  { label: 'ORCID', href: pi.links.orcid },
-  { label: 'GitHub', href: pi.links.github },
-  { label: 'CV', href: pi.links.cv },
-].filter((b) => b.href);
+  { label: 'Google Scholar', href: pi.scholar },
+  { label: 'UNB Profile', href: pi.profile },
+  { label: 'Email', href: pi.email && `mailto:${pi.email}` },
+  { label: 'LinkedIn', href: pi.linkedin },
+  { label: 'ORCID', href: pi.orcid },
+  { label: 'GitHub', href: pi.github },
+  { label: 'Website', href: pi.website },
+  { label: 'CV', href: pi.cv },
+].filter((b): b is { label: string; href: string } => Boolean(b.href));
 ---
 
-<BaseLayout title={pi.name} description={`${pi.name}, ${pi.title} and ${pi.chair}, ${pi.university}.`}>
+<BaseLayout title={pi.name} description={`${pi.name}, ${pi.title}${pi.subtitle ? ` and ${pi.subtitle}` : ''}, ${site.university}.`}>
   <PageHeader eyebrow="Principal Investigator" title={pi.name} />
 
-  <section class="container-page grid gap-10 py-12 md:grid-cols-[280px_1fr]">
-    <div>
-      <img
-        src={pi.photo}
-        alt={`Photo of ${pi.name}`}
-        width="560"
-        height="700"
-        class="w-full max-w-xs rounded-lg border border-unb-line bg-unb-light object-cover shadow-sm"
-      />
-      <p class="mt-4 font-semibold">{pi.title}</p>
-      <p class="font-semibold text-unb-red">{pi.chair}</p>
-      <p class="mt-1 text-sm text-unb-grey">{pi.department}<br />{pi.university}</p>
-      <p class="mt-2 text-sm"><a href={`mailto:${pi.email}`} class="text-unb-dark">{pi.email}</a></p>
-    </div>
-
-    <div>
-      <div class="flex flex-wrap gap-2">
-        {
-          buttons.map((b, i) => (
-            <a
-              href={b.href}
-              class:list={['btn', i === 0 ? 'btn-primary' : 'btn-outline']}
-              target={b.href.startsWith('http') ? '_blank' : undefined}
-              rel={b.href.startsWith('http') ? 'noopener' : undefined}
-            >
-              {b.label}
-            </a>
-          ))
-        }
+  <section class="container-page py-12">
+    <div class="mx-auto grid max-w-5xl gap-10 md:grid-cols-[240px_1fr]">
+      <div>
+        <div class="aspect-4/5 w-full max-w-60 overflow-hidden rounded-lg border border-unb-line bg-unb-light shadow-sm">
+          <img
+            src={pi.photo}
+            alt={`Photo of ${pi.name}`}
+            class="h-full w-full object-cover"
+            style={`object-position: ${pi.photoPosition}`}
+          />
+        </div>
+        <p class="mt-4 font-semibold">{pi.title}</p>
+        {pi.subtitle && <p class="font-semibold text-unb-red">{pi.subtitle}</p>}
+        <p class="mt-1 text-sm text-unb-grey">{site.department}<br />{site.university}</p>
+        {pi.email && <p class="mt-2 text-sm"><a href={`mailto:${pi.email}`} class="text-unb-dark">{pi.email}</a></p>}
       </div>
 
-      <h2 class="mt-10 mb-4 text-2xl font-semibold">Biography</h2>
-      <div class="prose-lab max-w-3xl text-lg">
-        <!-- [PLACEHOLDER] Replace the biography below with Dr. Chen's real bio. -->
-        <p>
-          [PLACEHOLDER] {pi.name} is an {pi.title} in the {pi.department} at the {pi.university}, holds the {pi.chair},
-          and leads the Wireless Intelligent Networking and Computing (WINC) Lab.
-        </p>
-        <p>
-          [PLACEHOLDER] Education: PhD in ... from ..., followed by postdoctoral research at .... Research interests
-          include wireless networking, the Internet of Things, and edge intelligence.
-        </p>
-        <p>[PLACEHOLDER] Selected honours, editorial roles, and professional service.</p>
+      <div>
+        <div class="flex flex-wrap gap-2">
+          {
+            buttons.map((b, i) => (
+              <a
+                href={b.href}
+                class:list={['btn', i === 0 ? 'btn-primary' : 'btn-outline']}
+                target={b.href.startsWith('http') ? '_blank' : undefined}
+                rel={b.href.startsWith('http') ? 'noopener' : undefined}
+              >
+                {b.label}
+              </a>
+            ))
+          }
+        </div>
+
+        <h2 class="mt-10 mb-4 text-2xl font-semibold">Biography</h2>
+        <div class="prose-lab max-w-3xl text-lg">
+          <Content />
+        </div>
       </div>
     </div>
   </section>

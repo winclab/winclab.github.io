@@ -1,127 +1,231 @@
 ---
+// Text for this page lives in src/data/join.ts.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
-import { pi } from '../data/site';
+import { getPI } from '../lib/pi';
+import {
+  openings,
+  topics,
+  requirements,
+  benefits,
+  paths,
+  applySubject,
+  applyMaterials,
+  links,
+  faqs,
+} from '../data/join';
 
-const paths = [
-  {
-    title: 'PhD and MSc students',
-    text: '[PLACEHOLDER] We recruit motivated graduate students with backgrounds in electrical/computer engineering, computer science, or related fields. Funding is available for strong candidates.',
-  },
-  {
-    title: 'Postdoctoral fellows',
-    text: '[PLACEHOLDER] Postdoctoral positions are posted here when available. We also support applications to external fellowships (e.g. NSERC, Mitacs).',
-  },
-  {
-    title: 'Undergraduate researchers',
-    text: '[PLACEHOLDER] UNB undergraduates can join through summer research awards (e.g. NSERC USRA), honours theses, or capstone projects.',
-  },
-  {
-    title: 'Visiting scholars and collaborators',
-    text: '[PLACEHOLDER] We welcome visiting students, researchers, and industry partners. Get in touch to discuss collaboration.',
-  },
-];
-
-const subject = encodeURIComponent('[Prospective Student] Your Name, Program, Intended Start Term');
+const pi = (await getPI()).data;
+const mailto = `mailto:${pi.email}?subject=${encodeURIComponent(applySubject)}`;
 ---
 
-<BaseLayout title="Join Us" description="Open positions and how to apply to the WINC Lab.">
+<BaseLayout title="Join Us" description="Open PhD positions and how to join the WINC Lab at the University of New Brunswick.">
   <PageHeader
     eyebrow="Join Us"
     title="Work with us"
-    intro="We are always looking for curious, driven people who want to build the future of wireless and intelligent systems."
+    intro="We are looking for curious, self-motivated people who want to build the next generation of intelligent wireless networks."
   />
 
-  <section class="container-page py-12">
-    <div class="mb-10 rounded-lg border-l-4 border-unb-red bg-unb-light p-6">
-      <p class="font-semibold">[PLACEHOLDER] Current openings</p>
-      <p class="mt-1 text-unb-grey">
-        [PLACEHOLDER] e.g. "We have 2 funded PhD positions starting September 2027." Update or remove this box.
-      </p>
-    </div>
-
-    <h2 class="section-title">Ways to work with the lab</h2>
-    <div class="grid gap-5 sm:grid-cols-2">
+  <!-- Current openings -->
+  <section class="container-page pt-12">
+    <div class="mx-auto max-w-5xl">
       {
-        paths.map((p) => (
-          <article class="card">
-            <h3 class="text-lg font-semibold text-unb-dark">{p.title}</h3>
-            <p class="mt-2 text-unb-grey">{p.text}</p>
-          </article>
-        ))
+        openings.length > 0 ? (
+          <div class="grid gap-4 md:grid-cols-[1fr_auto] md:items-center rounded-lg bg-unb-dark p-6 text-white sm:p-8">
+            <div>
+              <p class="text-xs font-bold tracking-widest text-white/70 uppercase">Now recruiting</p>
+              {openings.map((o) => (
+                <div class="mt-2">
+                  <p class="font-serif text-2xl font-semibold">{o.title}</p>
+                  <p class="text-white/85">
+                    {o.start}
+                    {o.details && <span> · {o.details}</span>}
+                  </p>
+                </div>
+              ))}
+            </div>
+            <a href="#apply" class="btn bg-white text-unb-dark hover:bg-unb-light">
+              How to apply ↓
+            </a>
+          </div>
+        ) : (
+          <div class="rounded-lg border border-unb-line bg-unb-light p-6">
+            <p class="font-semibold">No positions are advertised right now.</p>
+            <p class="mt-1 text-unb-grey">Exceptional candidates are still welcome to get in touch. See how to apply below.</p>
+          </div>
+        )
       }
     </div>
   </section>
 
-  <section class="bg-unb-light py-12">
-    <div class="container-page max-w-3xl">
-      <h2 class="section-title">How to apply</h2>
-      <p class="text-lg">
-        Email {pi.name} at
-        <a href={`mailto:${pi.email}?subject=${subject}`} class="font-semibold text-unb-dark">{pi.email}</a>
-        with the subject line:
-      </p>
-      <p class="mt-3 rounded border border-unb-line bg-white px-4 py-3 font-mono text-sm break-words">
-        [Prospective Student] Your Name, Program, Intended Start Term
-      </p>
-      <p class="mt-4 text-unb-grey">
-        Because of the volume of email, we may not be able to reply to every message. Applications that follow the
-        instructions below are much more likely to get a response.
-      </p>
+  <!-- Ways to join -->
+  <section class="container-page py-12">
+    <div class="mx-auto max-w-5xl">
+      <h2 class="section-title">Ways to work with the lab</h2>
+      <div class="grid gap-5 sm:grid-cols-2">
+        {
+          paths.map((p) => (
+            <article class="card">
+              <h3 class="text-lg font-semibold text-unb-dark">{p.title}</h3>
+              <p class="mt-2 text-unb-grey">{p.text}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
 
-      <div class="mt-8 space-y-3">
-        <details class="group card p-0" open>
-          <summary class="flex cursor-pointer list-none items-center justify-between p-5 font-semibold">
-            What to include in your email
-            <span class="text-unb-red transition group-open:rotate-45" aria-hidden="true">+</span>
-          </summary>
-          <div class="prose-lab border-t border-unb-line p-5">
-            <ul>
-              <li>[PLACEHOLDER] Your CV (PDF), including publications if any.</li>
-              <li>[PLACEHOLDER] Unofficial transcripts for all degrees.</li>
-              <li>[PLACEHOLDER] A short paragraph on which of our research directions interests you and why.</li>
-              <li>[PLACEHOLDER] English test scores (if applicable).</li>
-              <li>[PLACEHOLDER] Names of 2–3 references.</li>
+  <!-- Topics, requirements, benefits -->
+  <section class="bg-unb-light py-12">
+    <div class="container-page">
+      <div class="mx-auto max-w-5xl">
+        <h2 class="section-title">Research topics</h2>
+        <ul class="flex flex-wrap gap-2">
+          {topics.map((t) => <li class="rounded-full border border-unb-dark/30 bg-white px-4 py-1.5 text-sm font-semibold text-unb-dark">{t}</li>)}
+        </ul>
+
+        <div class="mt-10 grid gap-6 md:grid-cols-2">
+          <div class="card">
+            <h3 class="text-lg font-semibold">What we look for</h3>
+            <ul class="mt-3 space-y-2 text-unb-grey">
+              {
+                requirements.map((r) => (
+                  <li class="flex gap-2">
+                    <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-unb-red" aria-hidden="true" />
+                    <span>{r}</span>
+                  </li>
+                ))
+              }
+            </ul>
+            <p class="mt-4 text-sm">
+              <a href={links.eceProgram} target="_blank" rel="noopener" class="font-semibold text-unb-dark">
+                UNB ECE admission and English requirements →
+              </a>
+            </p>
+          </div>
+          <div class="card">
+            <h3 class="text-lg font-semibold">What we offer</h3>
+            <ul class="mt-3 space-y-2 text-unb-grey">
+              {
+                benefits.map((b) => (
+                  <li class="flex gap-2">
+                    <span class="font-bold text-unb-red" aria-hidden="true">✓</span>
+                    <span>{b}</span>
+                  </li>
+                ))
+              }
             </ul>
           </div>
-        </details>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <!-- How to apply -->
+  <section id="apply" class="container-page scroll-mt-20 py-12">
+    <div class="mx-auto max-w-5xl">
+      <div class="max-w-3xl">
+      <h2 class="section-title">How to apply</h2>
+
+      <ol class="space-y-6">
+        <li class="flex gap-4">
+          <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-unb-dark font-bold text-white">1</span>
+          <div>
+            <p class="font-semibold">Get to know our work</p>
+            <p class="text-unb-grey">
+              Read some of our <a href="/research#publications" class="text-unb-dark">publications</a> and{' '}
+              <a href="/about" class="text-unb-dark">research directions</a>. Applicants who show genuine, specific interest have a much
+              better chance.
+            </p>
+          </div>
+        </li>
+        <li class="flex gap-4">
+          <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-unb-dark font-bold text-white">2</span>
+          <div class="min-w-0">
+            <p class="font-semibold">Email {pi.name}</p>
+            <p class="text-unb-grey">
+              Send to <a href={mailto} class="font-semibold text-unb-dark">{pi.email}</a> with:
+            </p>
+            <ul class="mt-2 list-disc pl-5 text-unb-grey">
+              {applyMaterials.map((m) => <li>{m}</li>)}
+            </ul>
+            <p class="mt-3 text-unb-grey">Use this subject line:</p>
+            <p class="mt-1 rounded border border-unb-line bg-unb-light px-4 py-3 font-mono text-sm wrap-break-word">{applySubject}</p>
+          </div>
+        </li>
+        <li class="flex gap-4">
+          <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-unb-dark font-bold text-white">3</span>
+          <div>
+            <p class="font-semibold">Apply formally to UNB</p>
+            <p class="text-unb-grey">
+              If you are selected, you will also apply through UNB’s official graduate admissions process. See the details below.
+            </p>
+          </div>
+        </li>
+      </ol>
+
+      <div class="mt-8 rounded-lg border-l-4 border-unb-red bg-unb-light p-5 text-sm">
+        <p><strong>AI-generated emails will be ignored.</strong> Please write your own message.</p>
+        <p class="mt-1 text-unb-grey">Due to the volume of applications, only selected applicants will be contacted.</p>
+      </div>
+
+      <!-- Details -->
+      <div class="mt-10 space-y-3">
         <details class="group card p-0">
-          <summary class="flex cursor-pointer list-none items-center justify-between p-5 font-semibold">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 p-5 font-semibold">
             Formal application to UNB
-            <span class="text-unb-red transition group-open:rotate-45" aria-hidden="true">+</span>
+            <span class="text-xl text-unb-red transition group-open:rotate-45" aria-hidden="true">+</span>
           </summary>
           <div class="prose-lab border-t border-unb-line p-5">
             <p>
-              [PLACEHOLDER] After an initial conversation, you will need to apply formally through the
-              <a href="https://www.unb.ca/gradstudies/" target="_blank" rel="noopener">UNB School of Graduate Studies</a>
-              and list {pi.name} as your intended supervisor.
+              Follow UNB’s official graduate admissions process and apply through the
+              <a href={links.gradStudies} target="_blank" rel="noopener">UNB School of Graduate Studies</a>. Program-specific
+              requirements and deadlines are listed on the
+              <a href={links.eceProgram} target="_blank" rel="noopener">ECE graduate program page</a>.
             </p>
-            <p>[PLACEHOLDER] Add deadlines and program-specific requirements here.</p>
+            <p>Indicate {pi.name} as your intended supervisor in your application.</p>
           </div>
         </details>
 
         <details class="group card p-0">
-          <summary class="flex cursor-pointer list-none items-center justify-between p-5 font-semibold">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 p-5 font-semibold">
             Funding and scholarships
-            <span class="text-unb-red transition group-open:rotate-45" aria-hidden="true">+</span>
+            <span class="text-xl text-unb-red transition group-open:rotate-45" aria-hidden="true">+</span>
           </summary>
           <div class="prose-lab border-t border-unb-line p-5">
-            <p>[PLACEHOLDER] Describe typical funding packages, teaching assistantships, and external scholarships (NSERC, NBIF, Mitacs).</p>
-          </div>
-        </details>
-
-        <details class="group card p-0">
-          <summary class="flex cursor-pointer list-none items-center justify-between p-5 font-semibold">
-            Frequently asked questions
-            <span class="text-unb-red transition group-open:rotate-45" aria-hidden="true">+</span>
-          </summary>
-          <div class="prose-lab border-t border-unb-line p-5">
-            <p><strong>[PLACEHOLDER] Do I need a publication to apply?</strong> Answer here.</p>
-            <p><strong>[PLACEHOLDER] Can I do a remote internship?</strong> Answer here.</p>
+            <ul>
+              <li><strong>Lab funding:</strong> funding is available for strong and exceptional candidates. Admitted PhD students receive full financial support.</li>
+              <li>
+                <strong>Teaching assistantships:</strong> TA positions are available. Once you join UNB, you apply for them separately each
+                semester.
+              </li>
+              <li>
+                <strong>UNB scholarships:</strong> UNB offers entrance scholarships for graduate students. See the
+                <a href={links.gradStudies} target="_blank" rel="noopener">UNB School of Graduate Studies</a> for current awards and
+                eligibility.
+              </li>
+            </ul>
           </div>
         </details>
       </div>
+
+      <h2 class="mt-14 mb-4 text-2xl font-semibold">Frequently asked questions</h2>
+      <div class="divide-y divide-unb-line border-y border-unb-line">
+        {
+          faqs.map((f) => (
+            <details class="group">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-4 font-semibold">
+                {f.q}
+                <span class="text-xl text-unb-red transition group-open:rotate-45" aria-hidden="true">+</span>
+              </summary>
+              <div class="prose-lab pb-4 text-unb-grey">
+                <p set:html={f.a} />
+              </div>
+            </details>
+          ))
+        }
+      </div>
+    </div>
     </div>
   </section>
 </BaseLayout>

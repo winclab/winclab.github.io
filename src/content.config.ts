@@ -24,16 +24,26 @@ const publications = defineCollection({
 });
 
 // One Markdown file per person in src/content/people/; the body is a short bio.
+// The person with `role: pi` also drives the PI page, footer, and Join page (their body is the full PI bio).
 const people = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/people' }),
   schema: z.object({
     name: z.string(),
     role: z.enum(['pi', 'postdoc', 'phd', 'masters', 'undergrad', 'visiting', 'alumni']),
     title: z.string().optional(), // e.g. "PhD Student (2024–)"
+    subtitle: z.string().optional(), // second line, e.g. "Cisco Research Chair in IoT"
     photo: z.string().default('/images/people/placeholder.svg'), // path under public/
+    // Which part of the photo stays visible when it is cropped to a circle/frame.
+    // CSS object-position: "50% 20%" keeps the top of a portrait (default); "50% 50%" is centred.
+    photoPosition: z.string().default('50% 20%'),
     email: z.string().optional(),
     website: z.string().optional(),
     linkedin: z.string().optional(),
+    scholar: z.string().optional(), // Google Scholar profile URL
+    profile: z.string().optional(), // university profile page URL
+    orcid: z.string().optional(),
+    github: z.string().optional(),
+    cv: z.string().optional(), // URL, or /files/name-cv.pdf with the file in public/files/
     research: z.string().optional(), // one-line research interest
     now: z.string().optional(), // alumni only: current position
     order: z.number().default(100), // lower numbers appear first within a role

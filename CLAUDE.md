@@ -24,8 +24,10 @@ src/
     people/*.md             one file per person; body = short bio
     news/*.md               one file per item; body = 1–2 sentence Markdown summary
     gallery/gallery.yaml    list of photos (file() loader; each item needs unique `id`)
+  lib/pi.ts                 getPI(): the people entry with role: pi
   data/
-    site.ts                 lab name, address, PI info + profile links, nav, newsletter toggle
+    site.ts                 lab name, address, nav
+    join.ts                 Join Us page: openings, topics, requirements, benefits, how to apply, FAQs
     research.ts             summary, mission, research directions, interests, research program
                             (goal, figure, challenge/direction pairs), acknowledgements
     sponsors.ts             "Supported by" logos
@@ -33,7 +35,7 @@ src/
   layouts/BaseLayout.astro  <head>, header, footer
   components/               Header (mobile menu script), Footer, PageHeader, HeroGraphic (home hero SVG), DirectionFigure (inline SVG
                             illustration per research direction),
-                            Newsletter (placeholder form), NewsList, PersonCard, PublicationItem, PlaceholderBadge
+                            NewsList, PersonCard, PublicationItem, PlaceholderBadge
   pages/                    index, about, research, pi, people, gallery, news, join, 404
 ```
 
@@ -46,8 +48,12 @@ src/
 - **Colours:** use theme tokens (`text-unb-dark`, `bg-unb-light`, `border-unb-line`, …), not raw hex values.
   Buttons: `class="btn btn-primary"` or `class="btn btn-outline"` (both classes are needed).
 - **Internal links** are root-relative (`/research`). No base path is needed because the site is served at the root.
-- **PI info appears twice:** `src/data/site.ts` (`pi`, used by the PI page, footer and Join page) and
-  `src/content/people/hong-chen.md` (the People page card). Update both.
+- **Single source of truth for people:** the PI is the `role: pi` entry in `src/content/people/`
+  (`hong-chen.md`). Its frontmatter feeds the PI page, People card, footer, Home/About/Join text; its
+  Markdown body is the full PI bio. Read it with `getPI()` from `src/lib/pi.ts`, never hard-code PI details.
+- **Photo cropping:** people photos use `object-cover` with `object-position` from the `photoPosition`
+  field (default `50% 20%`, which keeps faces in portraits). Adjust per person instead of editing images.
+- New content should follow the same pattern: data in `src/content/` or `src/data/`, pages only render it.
 - People page group order and headings are defined in `src/pages/people.astro` (`groups`); valid
   `role` values are in the schema in `src/content.config.ts`.
 - No UI framework; the only client JS is the mobile menu toggle in `Header.astro` and the publication type
@@ -72,7 +78,7 @@ src/
 | News | `src/content/news/<yyyy-mm>-<slug>.md` | `title, date`; home shows the latest 3, `/news` shows all by year |
 | Gallery photo | add an item to `src/content/gallery/gallery.yaml` + image in `public/images/gallery/` | unique `id` |
 | Sponsor | `src/data/sponsors.ts` + logo in `public/images/sponsors/` | |
-| Newsletter | replace the `<form>` in `src/components/Newsletter.astro` with the Buttondown/Mailchimp embed | |
+| Openings / Join text | `src/data/join.ts` | set `openings: []` when nothing is open |
 | Custom domain | change `SITE_URL` in `astro.config.mjs` and add `public/CNAME` | |
 
 Always run `npm run build` after content changes to catch schema errors.

@@ -2,8 +2,11 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import DirectionFigure from '../components/DirectionFigure.astro';
-import { site, pi } from '../data/site';
+import { site } from '../data/site';
+import { getPI } from '../lib/pi';
 import { summary, mission, directions, interests } from '../data/research';
+
+const pi = (await getPI()).data;
 ---
 
 <BaseLayout title="About" description={summary}>
@@ -13,7 +16,7 @@ import { summary, mission, directions, interests } from '../data/research';
     <div class="prose-lab max-w-3xl text-lg">
       <p>{mission}</p>
       <p>
-        The {site.shortName} is part of the {site.department} at the {site.university}, led by {pi.name}, {pi.title} and {pi.chair}.
+        The {site.shortName} is part of the {site.department} at the {site.university}, led by {pi.name}, {pi.title} and {pi.subtitle}.
       </p>
     </div>
   </section>

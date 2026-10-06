@@ -24,7 +24,7 @@ const photos = (await getCollection('gallery')).sort(
                   src={p.data.image}
                   alt={p.data.caption}
                   loading="lazy"
-                  class="aspect-[4/3] w-full bg-unb-light object-cover transition duration-300 group-hover:scale-105"
+                  class="aspect-4/3 w-full bg-unb-light object-cover transition duration-300 group-hover:scale-105"
                 />
               </a>
               <figcaption class="p-3 text-sm">

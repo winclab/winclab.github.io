@@ -5,8 +5,9 @@ import PageHeader from '../components/PageHeader.astro';
 import PublicationItem from '../components/PublicationItem.astro';
 import { program, acknowledgements } from '../data/research';
 import { sponsors } from '../data/sponsors';
-import { pi } from '../data/site';
+import { getPI } from '../lib/pi';
 
+const pi = (await getPI()).data;
 const pubs = (await getCollection('publications')).sort(
   (a, b) => b.data.year - a.data.year || a.data.title.localeCompare(b.data.title),
 );
@@ -96,7 +97,7 @@ const filters = [
     <div class="mx-auto max-w-4xl">
     <div class="mb-4 flex flex-wrap items-baseline justify-between gap-2">
       <h2 class="text-2xl font-semibold sm:text-3xl">Publications</h2>
-      <a href={pi.links.scholar} class="text-sm font-semibold text-unb-dark hover:underline" target="_blank" rel="noopener">
+      <a href={pi.scholar ?? 'https://scholar.google.com/'} class="text-sm font-semibold text-unb-dark hover:underline" target="_blank" rel="noopener">
         Full list on Google Scholar →
       </a>
     </div>

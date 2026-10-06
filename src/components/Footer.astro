@@ -1,6 +1,8 @@
 ---
-import { nav, pi, site } from '../data/site';
+import { nav, site } from '../data/site';
+import { getPI } from '../lib/pi';
 
+const pi = (await getPI()).data;
 const year = new Date().getFullYear();
 ---
 

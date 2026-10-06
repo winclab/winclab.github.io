@@ -141,33 +141,38 @@ The text below the frontmatter can use Markdown, e.g. `[link text](https://...)`
   date: 2026-09-15              # optional; photos are sorted newest first
 ```
 
-### Page text, PI info, research program, and sponsors: `src/data/`
+### Dr. Chen (PI): `src/content/people/hong-chen.md`
+
+Everything about Dr. Chen lives in this one file: name, title, photo, email, profile links
+(`scholar`, `profile`, `linkedin`, `orcid`, `cv`), and the full biography (the text below the `---`).
+The PI page, People page, footer, and Join page all read from it.
+
+### Photos are cut off in the circle or frame?
+
+Add a `photoPosition` line to that person's file. It controls which part of the photo stays visible:
+
+```yaml
+photoPosition: "50% 20%"   # default: keeps the top of a portrait (faces)
+photoPosition: "50% 0%"    # show the very top
+photoPosition: "50% 50%"   # centred
+```
+
+Use photos at least 400 px wide; small photos look blurry on large screens.
+
+### Join Us page: `src/data/join.ts`
+
+Current openings, research topics, requirements, what we offer, how to apply, and FAQs. When there are
+no open positions, set `openings: []` and the page shows a "no positions advertised" note instead.
+
+### Other page text, research program, and sponsors: `src/data/`
 
 | File | What it controls |
 |---|---|
-| `src/data/site.ts` | Lab name, address, Dr. Chen's email, photo, and profile links (Google Scholar, UNB, LinkedIn, ORCID, CV), navigation menu |
-| `src/data/research.ts` | Lab summary, research directions, areas of interest, current research program (goal and subtasks) |
+| `src/data/site.ts` | Lab name, address, navigation menu |
+| `src/data/research.ts` | Lab summary, research directions, areas of interest, current research program, acknowledgements |
 | `src/data/sponsors.ts` | "Supported by" logos (logo files go in `public/images/sponsors/`) |
 
-Edit only the text inside the quotes. Leave a PI link as `''` to hide its button.
-
-Dr. Chen's details appear in **two** places: `src/data/site.ts` (PI page, footer, Join page) and
-`src/content/people/hong-chen.md` (People page). Update both.
-
-### Longer page text
-
-The About, PI biography, and Join Us text is written directly in `src/pages/about.astro`,
-`src/pages/pi.astro` and `src/pages/join.astro`. Edit the text between the HTML tags.
-
-### Newsletter signup
-
-The home page form is a **placeholder** and does not send anything yet. To connect it:
-
-- **Buttondown:** Settings → Embedding → copy the HTML form.
-- **Mailchimp:** Audience → Signup forms → Embedded forms → copy the `<form>…</form>` part.
-
-Paste it in place of the `<form>` in `src/components/Newsletter.astro` (instructions are in the
-file). To hide the section, set `enabled: false` under `newsletter` in `src/data/site.ts`.
+Edit only the text inside the quotes.
 
 ### Colours
 
