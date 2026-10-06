@@ -41,6 +41,7 @@ export const nav = [
   { label: 'PI', href: '/pi' },
   { label: 'People', href: '/people' },
   { label: 'Gallery', href: '/gallery' },
+  { label: 'News', href: '/news' },
   { label: 'Join Us', href: '/join' },
 ];
 

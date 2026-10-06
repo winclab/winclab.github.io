@@ -33,8 +33,8 @@ src/
   layouts/BaseLayout.astro  <head>, header, footer
   components/               Header (mobile menu script), Footer, PageHeader, DirectionFigure (inline SVG
                             illustration per research direction),
-                            Newsletter (placeholder form), PersonCard, PublicationItem, PlaceholderBadge
-  pages/                    index, about, research, pi, people, gallery, join, 404
+                            Newsletter (placeholder form), NewsList, PersonCard, PublicationItem, PlaceholderBadge
+  pages/                    index, about, research, pi, people, gallery, news, join, 404
 ```
 
 ## Conventions
@@ -50,7 +50,10 @@ src/
   `src/content/people/hong-chen.md` (the People page card). Update both.
 - People page group order and headings are defined in `src/pages/people.astro` (`groups`); valid
   `role` values are in the schema in `src/content.config.ts`.
-- No UI framework; the only client JS is the mobile menu toggle in `Header.astro`.
+- No UI framework; the only client JS is the mobile menu toggle in `Header.astro` and the publication type
+  filter on `research.astro`.
+- Page split: About = who we are, research directions, interests. Research = current program, publications,
+  acknowledgements (kept last). Avoid duplicating content between them.
 - Keep pages accessible: alt text on images, `aria-current` on nav, visible focus styles.
 
 - **Research program disclosure:** only the headline challenge/direction pairs from the lab poster are
@@ -66,7 +69,7 @@ src/
 | Publication | `src/content/publications/<year>-<slug>.md` | `title, authors[], venue, year, type` required; `doi` without `https://doi.org/` |
 | Person | `src/content/people/<first-last>.md` + photo in `public/images/people/` | `role` ∈ pi, postdoc, phd, masters, undergrad, visiting, alumni; `order` sorts within role |
 | Alumni | change `role: alumni`, optionally add `now:` | |
-| News | `src/content/news/<yyyy-mm>-<slug>.md` | `title, date`; the home page shows the latest 3 |
+| News | `src/content/news/<yyyy-mm>-<slug>.md` | `title, date`; home shows the latest 3, `/news` shows all by year |
 | Gallery photo | add an item to `src/content/gallery/gallery.yaml` + image in `public/images/gallery/` | unique `id` |
 | Sponsor | `src/data/sponsors.ts` + logo in `public/images/sponsors/` | |
 | Newsletter | replace the `<form>` in `src/components/Newsletter.astro` with the Buttondown/Mailchimp embed | |

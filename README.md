@@ -87,7 +87,7 @@ note: "Best Paper Award"  # optional
 ---
 ```
 
-Publications are grouped by year automatically, newest first.
+Publications are grouped by year automatically, newest first, and visitors can filter them by `type`.
 
 ### People: `src/content/people/`
 
@@ -126,7 +126,8 @@ link: "https://..."       # optional
 One or two sentences of plain text.
 ```
 
-The home page shows the 3 most recent items.
+The home page shows the 3 most recent items; the News page (`/news`) lists them all, grouped by year.
+The text below the frontmatter can use Markdown, e.g. `[link text](https://...)`.
 
 ### Gallery: `src/content/gallery/gallery.yaml`
 

@@ -1,10 +1,11 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroGraphic from '../components/HeroGraphic.astro';
 import Newsletter from '../components/Newsletter.astro';
-import PlaceholderBadge from '../components/PlaceholderBadge.astro';
+import NewsList from '../components/NewsList.astro';
 import { pi, site } from '../data/site';
-import { summary, mission, program } from '../data/research';
+import { summary, mission } from '../data/research';
 import { sponsors } from '../data/sponsors';
 
 const news = (await getCollection('news')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()).slice(0, 3);
@@ -18,7 +19,6 @@ const cards = [
   { title: 'Join Us', href: '/join', text: 'Open positions and how to apply.' },
 ];
 
-const fmt = (d: Date) => d.toLocaleDateString('en-CA', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' });
 ---
 
 <BaseLayout>
@@ -35,10 +35,9 @@ const fmt = (d: Date) => d.toLocaleDateString('en-CA', { year: 'numeric', month:
           <a href="/join" class="btn btn-outline">Join us</a>
         </div>
       </div>
-      <figure class="card p-3">
-        <img src={program.figure.src} alt={program.figure.alt} width="951" height="684" class="h-auto w-full rounded" />
-        <figcaption class="px-1 pt-2 text-xs text-unb-grey">{program.figure.caption}</figcaption>
-      </figure>
+      <div class="mx-auto w-full max-w-md">
+        <HeroGraphic />
+      </div>
     </div>
   </section>
 
@@ -63,29 +62,13 @@ const fmt = (d: Date) => d.toLocaleDateString('en-CA', { year: 'numeric', month:
   {
     news.length > 0 && (
       <section class="container-page pb-14">
-        <h2 class="section-title">Latest news</h2>
-        <ul class="divide-y divide-unb-line border-y border-unb-line">
-          {news.map((item) => (
-            <li class="flex flex-col gap-1 py-4 sm:flex-row sm:gap-6">
-              <time datetime={item.data.date.toISOString()} class="shrink-0 text-sm font-semibold text-unb-red sm:w-32">
-                {fmt(item.data.date)}
-              </time>
-              <div>
-                <p class="font-semibold">
-                  {item.data.link ? (
-                    <a href={item.data.link} class="text-unb-black hover:text-unb-dark">
-                      {item.data.title}
-                    </a>
-                  ) : (
-                    item.data.title
-                  )}
-                  {item.data.placeholder && <PlaceholderBadge />}
-                </p>
-                {item.body && <p class="text-sm text-unb-grey">{item.body.trim()}</p>}
-              </div>
-            </li>
-          ))}
-        </ul>
+        <div class="mb-6 flex flex-wrap items-baseline justify-between gap-2">
+          <h2 class="text-2xl font-semibold sm:text-3xl">Latest news</h2>
+          <a href="/news" class="text-sm font-semibold text-unb-dark hover:underline">
+            All news →
+          </a>
+        </div>
+        <NewsList items={news} />
       </section>
     )
   }

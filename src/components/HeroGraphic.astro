@@ -1,0 +1,59 @@
+---
+// Decorative network illustration for the home page hero.
+// To use a photo instead, replace this component's markup with an <img>.
+const nodes = [
+  { x: 200, y: 160, r: 18, hub: true },
+  { x: 90, y: 80, r: 9 },
+  { x: 320, y: 70, r: 10 },
+  { x: 340, y: 230, r: 9 },
+  { x: 220, y: 300, r: 11 },
+  { x: 70, y: 250, r: 8 },
+  { x: 40, y: 150, r: 6 },
+  { x: 140, y: 30, r: 6 },
+  { x: 370, y: 150, r: 7 },
+  { x: 120, y: 320, r: 6 },
+];
+const links = [
+  [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [1, 6], [1, 7], [2, 8], [3, 8], [4, 9], [5, 9], [5, 6],
+];
+---
+
+<svg viewBox="0 0 410 350" class="h-auto w-full" role="img" aria-label="Illustration of a wireless network">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#c8102e" stop-opacity="0.18"></stop>
+      <stop offset="100%" stop-color="#c8102e" stop-opacity="0"></stop>
+    </radialGradient>
+  </defs>
+  <circle cx="200" cy="160" r="160" fill="url(#glow)"></circle>
+  {
+    [40, 70, 100].map((r) => (
+      <circle cx="200" cy="160" r={r} fill="none" stroke="#c8102e" stroke-opacity="0.25" stroke-dasharray="4 6" />
+    ))
+  }
+  {
+    links.map(([a, b]) => (
+      <line
+        x1={nodes[a].x}
+        y1={nodes[a].y}
+        x2={nodes[b].x}
+        y2={nodes[b].y}
+        stroke="#7a0019"
+        stroke-opacity="0.45"
+        stroke-width="2"
+      />
+    ))
+  }
+  {
+    nodes.map((n) => (
+      <circle
+        cx={n.x}
+        cy={n.y}
+        r={n.r}
+        fill={n.hub ? '#7a0019' : '#ffffff'}
+        stroke={n.hub ? '#c8102e' : '#7a0019'}
+        stroke-width={n.hub ? 6 : 3}
+      />
+    ))
+  }
+</svg>

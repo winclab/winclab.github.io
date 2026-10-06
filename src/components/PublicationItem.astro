@@ -6,7 +6,15 @@ interface Props {
   pub: CollectionEntry<'publications'>;
 }
 const { pub } = Astro.props;
-const { title, authors, venue, year, doi, pdf, code, note, placeholder } = pub.data;
+const { title, authors, venue, year, type, doi, pdf, code, note, placeholder } = pub.data;
+const typeLabel: Record<typeof type, string> = {
+  journal: 'Journal',
+  conference: 'Conference',
+  preprint: 'Preprint',
+  'book-chapter': 'Book chapter',
+  thesis: 'Thesis',
+  other: 'Other',
+};
 const links = [
   doi && { label: 'DOI', href: `https://doi.org/${doi}` },
   pdf && { label: 'PDF', href: pdf },
@@ -14,8 +22,11 @@ const links = [
 ].filter(Boolean) as { label: string; href: string }[];
 ---
 
-<li class="border-l-4 border-unb-line py-1 pl-4 hover:border-unb-red">
+<li data-type={type} class="border-l-4 border-unb-line py-1 pl-4 hover:border-unb-red">
   <p class="font-semibold">
+    <span class="mr-2 inline-block rounded bg-unb-dark/10 px-1.5 py-0.5 align-middle text-[10px] font-bold tracking-wider text-unb-dark uppercase">
+      {typeLabel[type]}
+    </span>
     {title}
     {placeholder && <PlaceholderBadge />}
   </p>
