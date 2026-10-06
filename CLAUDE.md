@@ -22,7 +22,7 @@ src/
   content/
     publications/*.md       one file per paper (frontmatter only)
     people/*.md             one file per person; body = short bio
-    news/*.md               one file per item; body = 1–2 sentence summary (shown as plain text)
+    news/*.md               one file per item; body = 1–2 sentence Markdown summary
     gallery/gallery.yaml    list of photos (file() loader; each item needs unique `id`)
   data/
     site.ts                 lab name, address, PI info + profile links, nav, newsletter toggle
@@ -31,7 +31,7 @@ src/
     sponsors.ts             "Supported by" logos
   styles/global.css         Tailwind import, @theme colour tokens (unb-red, unb-dark, …), .btn/.card/etc.
   layouts/BaseLayout.astro  <head>, header, footer
-  components/               Header (mobile menu script), Footer, PageHeader, DirectionFigure (inline SVG
+  components/               Header (mobile menu script), Footer, PageHeader, HeroGraphic (home hero SVG), DirectionFigure (inline SVG
                             illustration per research direction),
                             Newsletter (placeholder form), NewsList, PersonCard, PublicationItem, PlaceholderBadge
   pages/                    index, about, research, pi, people, gallery, news, join, 404
