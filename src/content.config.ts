@@ -44,7 +44,8 @@ const people = defineCollection({
     orcid: z.string().optional(),
     github: z.string().optional(),
     cv: z.string().optional(), // URL, or /files/name-cv.pdf with the file in public/files/
-    research: z.string().optional(), // one-line research interest
+    research: z.string().optional(), // one-line research focus
+    summary: z.string().optional(), // PI only: 2–3 sentence intro on the People page (the body is the full bio)
     now: z.string().optional(), // alumni only: current position
     order: z.number().default(100), // lower numbers appear first within a role
     placeholder: z.boolean().default(false),

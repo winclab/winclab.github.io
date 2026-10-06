@@ -1,0 +1,30 @@
+---
+// Featured PI card at the top of the People page. Uses the `summary` field; the full bio is on /pi.
+import type { CollectionEntry } from 'astro:content';
+import ProfileLinks from './ProfileLinks.astro';
+import { site } from '../data/site';
+
+interface Props {
+  person: CollectionEntry<'people'>;
+}
+const { name, title, subtitle, photo, photoPosition, summary } = Astro.props.person.data;
+---
+
+<article class="card grid gap-6 border-t-4 border-t-unb-red p-6 sm:p-8 md:grid-cols-[200px_1fr] md:gap-10">
+  <div class="mx-auto aspect-4/5 w-44 overflow-hidden rounded-lg bg-unb-light shadow-sm md:mx-0 md:w-full">
+    <img src={photo} alt={`Photo of ${name}`} class="h-full w-full object-cover" style={`object-position: ${photoPosition}`} />
+  </div>
+  <div class="flex flex-col text-center md:text-left">
+    <p class="eyebrow">Principal Investigator</p>
+    <h3 class="text-2xl font-bold sm:text-3xl">{name}</h3>
+    <p class="mt-1 font-semibold text-unb-black">
+      {title}{subtitle && <span class="text-unb-red"> · {subtitle}</span>}
+    </p>
+    <p class="text-sm text-unb-grey">{site.department}, {site.university}</p>
+    {summary && <p class="mt-4 max-w-2xl leading-relaxed text-unb-grey">{summary}</p>}
+    <div class="mt-6 flex flex-col items-center gap-3 md:flex-row md:flex-wrap md:items-start">
+      <a href="/pi" class="btn btn-primary">Full biography →</a>
+      <ProfileLinks person={Astro.props.person.data} variant="buttons" />
+    </div>
+  </div>
+</article>

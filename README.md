@@ -101,14 +101,20 @@ name: "Jane Doe"
 role: phd                 # pi | postdoc | phd | masters | undergrad | visiting | alumni
 title: "PhD Student (2026–)"
 photo: /images/people/jane-doe.jpg
-email: jane.doe@unb.ca    # optional
-website: "https://janedoe.github.io"   # optional
-linkedin: "https://www.linkedin.com/in/janedoe"  # optional
-research: "Federated learning for IoT"  # optional one-liner
+research: "Semantic communications for IoT"   # one-line research focus (shown in bold)
+# Profile links: each one you fill in appears as an icon on your card.
+linkedin: "https://www.linkedin.com/in/janedoe"
+scholar: "https://scholar.google.com/citations?user=XXXX"
+website: "https://janedoe.github.io"
+github: "https://github.com/janedoe"
+orcid: "https://orcid.org/0000-0000-0000-0000"
+email: jane.doe@unb.ca
 order: 10                 # optional; lower numbers appear first within the group
 ---
-One or two sentences about Jane.
+Two or three sentences about Jane: background, what she works on in the lab, and research interests.
 ```
+
+All link fields are optional; delete the lines you don't need. Keep the bio to 2–3 sentences so the cards stay even.
 
 **When someone graduates:** change `role:` to `alumni`, update `title:` (e.g. `"PhD, 2029"`), and
 optionally add `now: "Research Scientist at Company"`.

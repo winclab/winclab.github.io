@@ -35,7 +35,8 @@ src/
   layouts/BaseLayout.astro  <head>, header, footer
   components/               Header (mobile menu script), Footer, PageHeader, HeroGraphic (home hero SVG), DirectionFigure (inline SVG
                             illustration per research direction),
-                            NewsList, PersonCard, PublicationItem, PlaceholderBadge
+                            NewsList, PersonCard (member card), PIFeature (featured PI card),
+                            ProfileLinks (icon/button links from person fields), PublicationItem, PlaceholderBadge
   pages/                    index, about, research, pi, people, gallery, news, join, 404
 ```
 
@@ -49,7 +50,7 @@ src/
   Buttons: `class="btn btn-primary"` or `class="btn btn-outline"` (both classes are needed).
 - **Internal links** are root-relative (`/research`). No base path is needed because the site is served at the root.
 - **Single source of truth for people:** the PI is the `role: pi` entry in `src/content/people/`
-  (`hong-chen.md`). Its frontmatter feeds the PI page, People card, footer, Home/About/Join text; its
+  (`hong-chen.md`). Its frontmatter (incl. `summary` for the People page) feeds the PI page, People card, footer, Home/About/Join text; its
   Markdown body is the full PI bio. Read it with `getPI()` from `src/lib/pi.ts`, never hard-code PI details.
 - **Photo cropping:** people photos use `object-cover` with `object-position` from the `photoPosition`
   field (default `50% 20%`, which keeps faces in portraits). Adjust per person instead of editing images.

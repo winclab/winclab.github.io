@@ -1,60 +1,42 @@
 ---
+// Card for a lab member on the People page: photo, name, role, research focus, short bio, profile links.
+// The PI uses PIFeature.astro instead.
 import type { CollectionEntry } from 'astro:content';
 import { render } from 'astro:content';
 import PlaceholderBadge from './PlaceholderBadge.astro';
+import ProfileLinks from './ProfileLinks.astro';
 
 interface Props {
   person: CollectionEntry<'people'>;
 }
 const { person } = Astro.props;
-const { name, role, title, subtitle, photo, photoPosition, email, website, linkedin, scholar, research, now, placeholder } =
-  person.data;
-const isPI = role === 'pi';
-// The PI's Markdown body is the full biography shown on /pi, so the card links there instead.
+const { name, title, photo, photoPosition, research, now, placeholder } = person.data;
 const { Content } = await render(person);
-
-const links = [
-  isPI && { label: 'Full bio', href: '/pi' },
-  email && { label: 'Email', href: `mailto:${email}` },
-  scholar && { label: 'Scholar', href: scholar },
-  website && { label: 'Website', href: website },
-  linkedin && { label: 'LinkedIn', href: linkedin },
-].filter(Boolean) as { label: string; href: string }[];
 ---
 
-<article class="card flex h-full flex-col items-center text-center">
+<article class="card flex h-full flex-col gap-5 p-5 sm:flex-row sm:p-6">
   <img
     src={photo}
     alt={`Photo of ${name}`}
-    width="160"
-    height="160"
+    width="112"
+    height="112"
     loading="lazy"
-    class="aspect-square h-32 w-32 rounded-full border-4 border-unb-light bg-unb-light object-cover"
+    class="aspect-square h-24 w-24 shrink-0 rounded-full border-4 border-unb-light bg-unb-light object-cover sm:h-28 sm:w-28"
     style={`object-position: ${photoPosition}`}
   />
-  <h3 class="mt-4 text-lg font-semibold">
-    {name}
-    {placeholder && <PlaceholderBadge />}
-  </h3>
-  {title && <p class="text-sm font-semibold text-unb-red">{title}</p>}
-  {subtitle && <p class="text-sm font-semibold text-unb-red">{subtitle}</p>}
-  {research && <p class="mt-2 text-sm text-unb-grey">{research}</p>}
-  {now && <p class="mt-2 text-sm text-unb-grey">Now: {now}</p>}
-  {!isPI && <div class="prose-lab mt-2 text-sm text-unb-grey [&_p]:mb-0"><Content /></div>}
-  {
-    links.length > 0 && (
-      <div class="mt-auto flex flex-wrap justify-center gap-x-4 gap-y-1 pt-4 text-sm font-semibold">
-        {links.map((l) => (
-          <a
-            href={l.href}
-            class="text-unb-dark hover:underline"
-            target={l.href.startsWith('http') ? '_blank' : undefined}
-            rel={l.href.startsWith('http') ? 'noopener' : undefined}
-          >
-            {l.label}
-          </a>
-        ))}
-      </div>
-    )
-  }
+  <div class="flex min-w-0 flex-1 flex-col">
+    <h3 class="text-lg leading-tight font-semibold">
+      {name}
+      {placeholder && <PlaceholderBadge />}
+    </h3>
+    {title && <p class="mt-0.5 text-sm font-semibold text-unb-red">{title}</p>}
+    {research && <p class="mt-2 text-sm font-semibold text-unb-black">{research}</p>}
+    {now && <p class="mt-2 text-sm text-unb-grey">Now: {now}</p>}
+    <div class="prose-lab mt-2 text-sm leading-relaxed text-unb-grey [&_p]:mb-2 [&_p:last-child]:mb-0">
+      <Content />
+    </div>
+    <div class="mt-auto pt-4">
+      <ProfileLinks person={person.data} />
+    </div>
+  </div>
 </article>

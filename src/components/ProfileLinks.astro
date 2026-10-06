@@ -1,0 +1,65 @@
+---
+// Profile links for a person (email, Google Scholar, LinkedIn, website, GitHub, ORCID, CV, university profile).
+// Only links filled in the person's Markdown file are shown.
+//   variant="icons"   → compact round icon buttons (member cards)
+//   variant="buttons" → icon + label pills (PI)
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  person: CollectionEntry<'people'>['data'];
+  variant?: 'icons' | 'buttons';
+}
+const { person, variant = 'icons' } = Astro.props;
+
+// 24×24 stroke/fill icon paths
+const icons: Record<string, string> = {
+  email: '<path d="M4 6h16v12H4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="m4 7 8 6 8-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>',
+  scholar: '<path d="M12 3 1 9l11 6 9-4.9V17h2V9z" fill="currentColor"/><path d="M5 13.2v3.5C5 18.5 8.1 20 12 20s7-1.5 7-3.3v-3.5l-7 3.8z" fill="currentColor"/>',
+  linkedin: '<path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3zM9.5 9.5h3.8v1.6h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1V21h-4v-5.1c0-1.22-.02-2.79-1.7-2.79-1.7 0-1.96 1.33-1.96 2.7V21h-4z" fill="currentColor"/>',
+  website: '<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z" fill="none" stroke="currentColor" stroke-width="2"/>',
+  github: '<path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2z" fill="currentColor"/>',
+  orcid: '<circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M8.3 7.6a.9.9 0 1 1 0 1.8.9.9 0 0 1 0-1.8zM7.6 10.3h1.4v6.5H7.6zM10.7 10.3h3.1c2.4 0 3.6 1.6 3.6 3.25 0 1.8-1.4 3.25-3.6 3.25h-3.1zm1.4 1.2v4.1h1.6c1.6 0 2.3-1 2.3-2.05 0-1.15-.8-2.05-2.3-2.05z" fill="#fff"/>',
+  profile: '<path d="M12 3 2 8h20zM4 10h2v8H4zm5 0h2v8H9zm4 0h2v8h-2zm5 0h2v8h-2zM2 20h20v2H2z" fill="currentColor"/>',
+  cv: '<path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M14 2v6h6M9 13h8M9 17h8" fill="none" stroke="currentColor" stroke-width="2"/>',
+};
+
+const all = [
+  { key: 'scholar', label: 'Google Scholar', href: person.scholar },
+  { key: 'linkedin', label: 'LinkedIn', href: person.linkedin },
+  { key: 'website', label: 'Website', href: person.website },
+  { key: 'github', label: 'GitHub', href: person.github },
+  { key: 'orcid', label: 'ORCID', href: person.orcid },
+  { key: 'profile', label: 'UNB Profile', href: person.profile },
+  { key: 'cv', label: 'CV', href: person.cv },
+  { key: 'email', label: 'Email', href: person.email && `mailto:${person.email}` },
+];
+const links = all.filter((l): l is { key: string; label: string; href: string } => Boolean(l.href));
+const external = (href: string) => href.startsWith('http');
+---
+
+{
+  links.length > 0 && (
+    <ul class:list={['flex flex-wrap', variant === 'icons' ? 'gap-1.5' : 'justify-center gap-2 md:justify-start']}>
+      {links.map((l) => (
+        <li>
+          <a
+            href={l.href}
+            target={external(l.href) ? '_blank' : undefined}
+            rel={external(l.href) ? 'noopener' : undefined}
+            aria-label={variant === 'icons' ? `${person.name}: ${l.label}` : undefined}
+            title={variant === 'icons' ? l.label : undefined}
+            class:list={[
+              'no-underline transition-colors',
+              variant === 'icons'
+                ? 'flex h-8 w-8 items-center justify-center rounded-full border border-unb-line text-unb-grey hover:border-unb-dark hover:bg-unb-dark hover:text-white'
+                : 'inline-flex items-center gap-2 rounded-md border border-unb-dark/30 px-3 py-1.5 text-sm font-semibold text-unb-dark hover:border-unb-dark hover:bg-unb-dark hover:text-white',
+            ]}
+          >
+            <svg viewBox="0 0 24 24" class="h-4 w-4" aria-hidden="true" set:html={icons[l.key]} />
+            {variant === 'buttons' && <span>{l.label}</span>}
+          </a>
+        </li>
+      ))}
+    </ul>
+  )
+}

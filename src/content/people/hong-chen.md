@@ -10,6 +10,7 @@ profile: https://www.unb.ca/ # [PLACEHOLDER] UNB faculty profile URL
 # linkedin: https://www.linkedin.com/in/...
 # orcid: https://orcid.org/0000-0000-0000-0000
 # cv: /files/hong-chen-cv.pdf
+summary: "[PLACEHOLDER] Dr. Chen leads the WINC Lab, whose research develops new architectures, algorithms, and system designs for intelligent wireless communication, networking, and computing, with a focus on semantic communications, edge intelligence, and digital twin-assisted networking for intelligent IoT systems."
 order: 1
 ---
 [PLACEHOLDER] Dr. Hong Chen is an Assistant Professor in the Department of Electrical and Computer Engineering at the University of New Brunswick, holds the Cisco Research Chair in IoT, and leads the Wireless Intelligent Networking and Computing (WINC) Lab.
