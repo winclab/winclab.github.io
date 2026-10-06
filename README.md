@@ -111,7 +111,7 @@ orcid: "https://orcid.org/0000-0000-0000-0000"
 email: jane.doe@unb.ca
 order: 10                 # optional; lower numbers appear first within the group
 ---
-Two or three sentences about Jane: background, what she works on in the lab, and research interests.
+Two or three sentences: background, current work in the lab, and research interests.
 ```
 
 All link fields are optional; delete the lines you don't need. Keep the bio to 2–3 sentences so the cards stay even.
