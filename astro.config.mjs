@@ -11,6 +11,8 @@ export default defineConfig({
   site: SITE_URL,
   output: 'static',
   trailingSlash: 'ignore',
+  // Hide the dev-only toolbar overlay on localhost (it never appears on the live site).
+  devToolbar: { enabled: false },
   vite: {
     plugins: [tailwindcss()],
   },

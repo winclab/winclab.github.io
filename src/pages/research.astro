@@ -28,73 +28,72 @@ const filters = [
     .filter((f) => f.count > 0),
 ];
 
-const sections = [
-  { id: 'program', label: 'Research program' },
-  { id: 'challenges', label: 'Challenges & directions' },
-  { id: 'publications', label: 'Publications' },
-];
 ---
 
 <BaseLayout title="Research" description={`Current research program: ${program.title}.`}>
   <PageHeader eyebrow="Current research program" title={program.title} />
 
-  <!-- In-page navigation -->
-  <nav aria-label="On this page" class="sticky top-16 z-30 border-b border-unb-line bg-white/95 backdrop-blur">
-    <ul class="container-page flex gap-1 overflow-x-auto py-2 text-sm font-semibold whitespace-nowrap">
-      {
-        sections.map((s) => (
-          <li>
-            <a href={`#${s.id}`} class="block rounded px-3 py-1.5 text-unb-grey no-underline hover:bg-unb-light hover:text-unb-dark">
-              {s.label}
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-  </nav>
+  <!-- Program: goal, then full-width figure -->
+  <section id="program" class="container-page py-12 sm:py-16">
+    <div class="mx-auto max-w-4xl">
+      <p class="eyebrow">Goal</p>
+      <p class="font-serif text-2xl leading-snug text-unb-black sm:text-3xl">{program.goal}</p>
 
-  <section id="program" class="container-page scroll-mt-32 py-12">
-    <div class="grid items-start gap-8 lg:grid-cols-[3fr_2fr]">
-      <figure class="card p-3">
-        <a href={program.figure.src} target="_blank" rel="noopener" title="Open full-size figure">
-          <img src={program.figure.src} alt={program.figure.alt} width="951" height="684" class="h-auto w-full rounded" />
+      <figure class="mt-10">
+        <a href={program.figure.src} target="_blank" rel="noopener" title="Open full-size figure" class="block">
+          <img
+            src={program.figure.src}
+            alt={program.figure.alt}
+            width="951"
+            height="684"
+            class="h-auto w-full rounded-lg border border-unb-line bg-white p-2 shadow-sm sm:p-4"
+          />
         </a>
-        <figcaption class="px-2 pt-3 text-sm text-unb-grey">{program.figure.caption}</figcaption>
+        <figcaption class="mt-4 flex flex-col gap-3 text-sm text-unb-grey sm:flex-row sm:items-center sm:justify-between">
+          <span>{program.figure.caption}</span>
+          <span class="flex flex-wrap gap-2">
+            {program.applications.map((a) => (
+              <span class="rounded-full border border-unb-dark/25 px-3 py-0.5 text-xs font-semibold text-unb-dark">{a}</span>
+            ))}
+          </span>
+        </figcaption>
       </figure>
+    </div>
+  </section>
 
-      <div>
-        <div class="rounded-lg border-l-4 border-unb-dark bg-unb-light p-6">
-          <p class="eyebrow">Goal</p>
-          <p class="text-lg">{program.goal}</p>
+  <!-- Challenges and directions -->
+  <section id="challenges" class="bg-unb-light py-12 sm:py-16">
+    <div class="container-page">
+      <div class="mx-auto max-w-4xl">
+        <h2 class="section-title">Key challenges and research directions</h2>
+        <div class="hidden grid-cols-[3rem_1fr_1fr] gap-6 border-b border-unb-line pb-2 text-xs font-bold tracking-wider uppercase md:grid">
+          <span></span>
+          <span class="text-unb-grey">Challenge</span>
+          <span class="text-unb-red">Research direction</span>
         </div>
-        <p class="mt-6 mb-2 text-sm font-semibold tracking-wider text-unb-grey uppercase">Application scenarios</p>
-        <ul class="flex flex-wrap gap-2">
-          {program.applications.map((a) => <li class="rounded-full bg-unb-dark px-3 py-1 text-sm font-semibold text-white">{a}</li>)}
-        </ul>
+        <ol class="divide-y divide-unb-line">
+          {
+            program.subtasks.map((t, i) => (
+              <li class="grid gap-2 py-6 md:grid-cols-[3rem_1fr_1fr] md:gap-6">
+                <span class="font-serif text-2xl font-bold text-unb-red">0{i + 1}</span>
+                <div>
+                  <p class="text-xs font-bold tracking-wider text-unb-grey uppercase md:hidden">Challenge</p>
+                  <p class="text-unb-grey">{t.challenge}</p>
+                </div>
+                <div class="md:border-l-2 md:border-unb-red md:pl-6">
+                  <p class="mt-2 text-xs font-bold tracking-wider text-unb-red uppercase md:hidden">Research direction</p>
+                  <p class="font-serif text-lg leading-snug font-semibold text-unb-dark">{t.direction}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
       </div>
     </div>
   </section>
 
-  <section id="challenges" class="scroll-mt-32 bg-unb-light py-12">
-    <div class="container-page">
-      <h2 class="section-title">Key challenges and research directions</h2>
-      <ol class="grid gap-5 md:grid-cols-3">
-        {
-          program.subtasks.map((t, i) => (
-            <li class="card flex flex-col border-t-4 border-t-unb-red">
-              <p class="font-serif text-3xl font-bold text-unb-red/40">0{i + 1}</p>
-              <p class="mt-2 text-xs font-bold tracking-wider text-unb-grey uppercase">Challenge</p>
-              <p class="mt-1">{t.challenge}</p>
-              <p class="mt-4 text-xs font-bold tracking-wider text-unb-red uppercase">Research direction</p>
-              <p class="mt-1 font-serif text-lg font-semibold text-unb-dark">{t.direction}</p>
-            </li>
-          ))
-        }
-      </ol>
-    </div>
-  </section>
-
-  <section id="publications" class="container-page scroll-mt-32 py-12">
+  <section id="publications" class="container-page py-12 sm:py-16">
+    <div class="mx-auto max-w-4xl">
     <div class="mb-4 flex flex-wrap items-baseline justify-between gap-2">
       <h2 class="text-2xl font-semibold sm:text-3xl">Publications</h2>
       <a href={pi.links.scholar} class="text-sm font-semibold text-unb-dark hover:underline" target="_blank" rel="noopener">
@@ -134,11 +133,12 @@ const sections = [
         </div>
       ))
     }
+    </div>
   </section>
 
   <!-- Acknowledgements -->
   <section aria-labelledby="ack-heading" class="border-t border-unb-line bg-unb-light/60">
-    <div class="container-page grid items-center gap-6 py-10 md:grid-cols-[1fr_auto]">
+    <div class="container-page"><div class="mx-auto grid max-w-4xl items-center gap-6 py-10 md:grid-cols-[1fr_auto]">
       <div>
         <h2 id="ack-heading" class="text-lg font-semibold">Acknowledgements</h2>
         <p class="mt-1 text-sm text-unb-grey">This research is supported in part by:</p>
@@ -155,6 +155,7 @@ const sections = [
           ))
         }
       </ul>
+    </div>
     </div>
   </section>
 </BaseLayout>
