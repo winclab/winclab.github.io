@@ -30,7 +30,14 @@ const links = [
     {title}
     {placeholder && <PlaceholderBadge />}
   </p>
-  <p class="text-sm text-unb-grey">{authors.join(', ')}</p>
+  <p class="text-sm text-unb-grey">
+    {authors.map((a, i) => (
+      <>
+        {i > 0 && ', '}
+        {a === 'Hong Chen' ? <strong class="font-semibold text-unb-black">{a}</strong> : a}
+      </>
+    ))}
+  </p>
   <p class="text-sm">
     <em>{venue}</em>, {year}
     {note && <span class="ml-2 font-semibold text-unb-red">{note}</span>}

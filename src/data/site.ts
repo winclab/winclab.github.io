@@ -10,8 +10,8 @@ export const site = {
   university: 'University of New Brunswick',
   universityUrl: 'https://www.unb.ca',
   location: 'Fredericton, New Brunswick, Canada',
-  // [PLACEHOLDER] Replace with the lab's room / building.
-  address: '[PLACEHOLDER] Room XXX, Head Hall, 15 Dineen Drive, Fredericton, NB E3B 5A3',
+  // Shown in the footer. Currently the PI's office; change if the lab gets its own room.
+  address: 'Gillin Hall GD117A, University of New Brunswick, Fredericton, NB',
 };
 
 export const nav = [

@@ -37,6 +37,8 @@ const people = defineCollection({
     // CSS object-position: "50% 20%" keeps the top of a portrait (default); "50% 50%" is centred.
     photoPosition: z.string().default('50% 20%'),
     email: z.string().optional(),
+    phone: z.string().optional(),
+    office: z.string().optional(), // e.g. "Gillin Hall GD117A"
     website: z.string().optional(),
     linkedin: z.string().optional(),
     scholar: z.string().optional(), // Google Scholar profile URL

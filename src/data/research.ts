@@ -63,6 +63,8 @@ export const interests = [
   'Digital twin-assisted networking',
   'LEO satellite networks',
   'Agentic AI',
+  'Multi-access edge computing (MEC)',
+  'Generative AI and large language models (LLMs)',
   'Joint resource allocation',
   'Machine learning for communications and networking',
 ];

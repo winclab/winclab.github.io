@@ -224,6 +224,7 @@ Build and deployment → Source** and choose **GitHub Actions**.
 | Build fails with `InvalidContentEntryDataError` | The error names the file and field. Common causes: a missing required field, a typo in `role`/`type`, or an unquoted value containing `:`. |
 | Image doesn't show | Paths start with `/images/...` (no `public/`), and file names are case-sensitive: `Photo.JPG` ≠ `photo.jpg`. |
 | `gallery.yaml` error | Check that indentation uses spaces and every item has a unique `id`. |
+| Local preview doesn't show a new field or content change (but `npm run build` does) | The dev server cached old content. Run `npx astro dev stop`, delete the `.astro` folder and `node_modules/.astro`, then `npm run dev` again. |
 | Change isn't live | Check the **Actions** tab, wait about 2 minutes, then hard-refresh (Ctrl/Cmd + Shift + R). |
 
 ## Tech stack
